@@ -17,6 +17,11 @@ import {
   PromptInputTextarea, 
   PromptInputActions
 } from './prompt-kit/prompt-input';
+import {
+  Reasoning,
+  ReasoningContent,
+  ReasoningTrigger,
+} from './prompt-kit/reasoning';
 import { 
   Sparkles, 
   X, 
@@ -34,6 +39,11 @@ interface MessageHistoryItem {
   sender: 'agent' | 'user';
   content: string;
   timestamp: string;
+  reasoning?: {
+    text: string;
+    isStreaming: boolean;
+    isOpen: boolean;
+  };
 }
 
 const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
@@ -47,6 +57,77 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
 
   const [newMessage, setNewMessage] = useState('');
   const [isNewTaskModalOpen, setIsNewTaskModalOpen] = useState(false);
+
+  // Simulated streaming function with markdown content for reasoning
+  const simulateReasoningStream = async (
+    messageIndex: number,
+    setText: (text: string) => void,
+    setIsStreaming: (streaming: boolean) => void
+  ) => {
+    const reasoning = `# Analyzing: "${newMessage}"
+
+## Step 1: Understanding the Query
+I need to analyze your request about **${newMessage}** and provide relevant insights.
+
+## Step 2: Data Processing
+- Gathering relevant sales data 📊
+- Analyzing performance metrics 📈
+- Identifying key patterns 🔍
+
+## Step 3: Insight Generation
+\`\`\`
+Processing your request...
+Generating insights...
+Preparing recommendations...
+\`\`\`
+
+> **Status:** Analysis complete! Ready to provide detailed insights.`
+
+    setIsStreaming(true)
+    setText("")
+
+    // Update the message with streaming state - keep closed by default
+    setMessageHistory(prev => prev.map((msg, idx) => 
+      idx === messageIndex ? {
+        ...msg,
+        reasoning: { text: "", isStreaming: true, isOpen: false }
+      } : msg
+    ))
+
+    // Simulate character-by-character streaming
+    for (let i = 0; i <= reasoning.length; i++) {
+      const currentText = reasoning.slice(0, i)
+      setText(currentText)
+      
+      // Update the message with current reasoning text - preserve user's open/close state
+      setMessageHistory(prev => prev.map((msg, idx) => 
+        idx === messageIndex ? {
+          ...msg,
+          reasoning: { 
+            text: currentText, 
+            isStreaming: true, 
+            isOpen: msg.reasoning?.isOpen || false 
+          }
+        } : msg
+      ))
+      
+      await new Promise((resolve) => setTimeout(resolve, 20))
+    }
+
+    setIsStreaming(false)
+    
+    // Final update with completed reasoning - preserve user's open/close state
+    setMessageHistory(prev => prev.map((msg, idx) => 
+      idx === messageIndex ? {
+        ...msg,
+        reasoning: { 
+          text: reasoning, 
+          isStreaming: false, 
+          isOpen: msg.reasoning?.isOpen || false 
+        }
+      } : msg
+    ))
+  };
 
   // Force scroll to bottom when messages change
   useEffect(() => {
@@ -81,16 +162,29 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
       };
       
       setMessageHistory(prev => [...prev, userMessage]);
+      const currentMessage = newMessage;
       setNewMessage('');
       
       // Simulate agent response after a short delay
       setTimeout(() => {
         const agentResponse: MessageHistoryItem = {
           sender: 'agent',
-          content: `I understand you're asking about "${newMessage}". Let me help you analyze this and provide insights.`,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          content: `I understand you're asking about "${currentMessage}". Let me help you analyze this and provide insights.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          reasoning: {
+            text: "",
+            isStreaming: false,
+            isOpen: false
+          }
         };
-        setMessageHistory(prev => [...prev, agentResponse]);
+        
+        setMessageHistory(prev => {
+          const updatedHistory = [...prev, agentResponse];
+          // Trigger reasoning for the agent message
+          const agentMessageIndex = updatedHistory.length - 1;
+          simulateReasoningStream(agentMessageIndex, () => {}, () => {});
+          return updatedHistory;
+        });
       }, 1000);
     }
   };
@@ -135,6 +229,34 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
                 }`}>
                   <p className="text-sm leading-5">{message.content}</p>
                   <p className="text-xs text-gray-500 mt-1">{message.timestamp}</p>
+                  
+                  {/* Reasoning component for agent messages */}
+                  {message.sender === 'agent' && message.reasoning && (
+                    <div className="mt-3">
+                      <Reasoning 
+                        isStreaming={message.reasoning.isStreaming} 
+                        open={message.reasoning.isOpen}
+                        onOpenChange={(open) => {
+                          setMessageHistory(prev => prev.map((msg, idx) => 
+                            idx === index ? {
+                              ...msg,
+                              reasoning: msg.reasoning ? { ...msg.reasoning, isOpen: open } : undefined
+                            } : msg
+                          ))
+                        }}
+                      >
+                        <ReasoningTrigger>
+                          {message.reasoning.isStreaming ? "Thinking..." : "Show AI reasoning"}
+                        </ReasoningTrigger>
+                        <ReasoningContent
+                          markdown
+                          className="ml-2 border-l-2 border-l-slate-200 px-2 pb-1 dark:border-l-slate-700"
+                        >
+                          {message.reasoning.text}
+                        </ReasoningContent>
+                      </Reasoning>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
