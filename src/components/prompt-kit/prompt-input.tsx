@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
-import { Plus, Send } from "lucide-react"
+import { Send } from "lucide-react"
 import React, {
   createContext,
   useContext,
@@ -165,7 +165,7 @@ function PromptInputActions({
   
   return (
     <div className={cn("flex items-center justify-between w-full", className)} {...props}>
-      <button
+      {/* <button
         type="button"
         className="bg-white border border-violet-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-gray-50 transition-colors"
         onClick={(e) => {
@@ -175,10 +175,12 @@ function PromptInputActions({
       >
         <Plus className="w-4 h-4 text-[#6927da]" />
         <span className="text-[#6927da] text-xs font-semibold">New Task</span>
-      </button>
+      </button> */}
       
-      <div className="flex items-center gap-2">
-        {children}
+      <div className="flex items-center justify-between w-full">
+        <div className="flex items-center gap-2">
+          {children}
+        </div>
         <button
           type="button"
           className="bg-[#7800f2] border-[#5720b7] border-[1.5px] rounded-full w-8 h-8 flex items-center justify-center hover:bg-[#6a00d9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
