@@ -15,10 +15,8 @@ import {
 import { 
   PromptInput, 
   PromptInputTextarea, 
-  PromptInputActions, 
-  PromptInputAction 
+  PromptInputActions
 } from './prompt-kit/prompt-input';
-import { Button } from './ui/button';
 
 interface ChatPanelProps {
   className?: string;
@@ -97,7 +95,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
                 <MessageContent 
                   markdown={false}
                   className={message.type === 'user' 
-                    ? 'bg-blue-500 text-white' 
+                    ? 'bg-purple-50 text-gray-900' 
                     : 'bg-gray-100 text-gray-900'
                   }
                 >
@@ -121,24 +119,8 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
           onSubmit={handleSendMessage}
           className="w-full"
         >
-          <PromptInputTextarea
-            placeholder="Type your message..."
-            className="text-sm"
-          />
-          <PromptInputActions>
-            <PromptInputAction tooltip="Send message">
-              <Button
-                onClick={handleSendMessage}
-                disabled={!newMessage.trim()}
-                size="sm"
-                className="h-8 w-8 p-0"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-              </Button>
-            </PromptInputAction>
-          </PromptInputActions>
+          <PromptInputTextarea className="text-sm" />
+          <PromptInputActions />
         </PromptInput>
         <p className="text-xs text-gray-500 mt-2">Press Enter to send, Shift+Enter for new line</p>
       </div>

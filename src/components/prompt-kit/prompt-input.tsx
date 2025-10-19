@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
+import { Plus, Send } from "lucide-react"
 import React, {
   createContext,
   useContext,
@@ -85,12 +86,14 @@ function PromptInput({
       >
         <div
           className={cn(
-            "bg-white cursor-text rounded-2xl border border-gray-200 p-3 shadow-sm hover:shadow-md transition-shadow",
+            "bg-[#ece9fe] cursor-text rounded-xl p-2",
             className
           )}
           onClick={() => textareaRef.current?.focus()}
         >
-          {children}
+          <div className="bg-white border border-[#a48afb] rounded-xl p-3">
+            {children}
+          </div>
         </div>
       </PromptInputContext.Provider>
     </TooltipProvider>
@@ -139,8 +142,9 @@ function PromptInputTextarea({
       value={value}
       onChange={(e) => setValue(e.target.value)}
       onKeyDown={handleKeyDown}
+      placeholder="Ask Blake anything about Root Cause Analysis..."
       className={cn(
-        "text-gray-900 placeholder:text-gray-500 min-h-[44px] w-full resize-none border-none bg-transparent shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+        "text-gray-900 placeholder:text-[#697586] min-h-[44px] w-full resize-none border-none bg-transparent shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
         className
       )}
       rows={1}
@@ -157,9 +161,36 @@ function PromptInputActions({
   className,
   ...props
 }: PromptInputActionsProps) {
+  const { onSubmit, disabled } = usePromptInput()
+  
   return (
-    <div className={cn("flex items-center justify-end", className)} {...props}>
-      {children}
+    <div className={cn("flex items-center justify-between w-full", className)} {...props}>
+      <button
+        type="button"
+        className="bg-white border border-violet-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-gray-50 transition-colors"
+        onClick={(e) => {
+          e.stopPropagation()
+          // Handle new task action
+        }}
+      >
+        <Plus className="w-4 h-4 text-[#6927da]" />
+        <span className="text-[#6927da] text-xs font-semibold">New Task</span>
+      </button>
+      
+      <div className="flex items-center gap-2">
+        {children}
+        <button
+          type="button"
+          className="bg-[#7800f2] border-[#5720b7] border-[1.5px] rounded-full w-8 h-8 flex items-center justify-center hover:bg-[#6a00d9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={(e) => {
+            e.stopPropagation()
+            onSubmit?.()
+          }}
+          disabled={disabled}
+        >
+          <Send className="w-5 h-5 text-white" />
+        </button>
+      </div>
     </div>
   )
 }
