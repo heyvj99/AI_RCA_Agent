@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AsyncFlow New
 
-## Getting Started
+A modern Next.js application built with TypeScript and Tailwind CSS for managing asynchronous workflows and processes.
 
-First, run the development server:
+## Description
+
+AsyncFlow New is a web application designed to handle and visualize asynchronous workflows. Built with Next.js 15, React 19, and TypeScript, it provides a modern, responsive interface for managing complex async operations with an intuitive user experience.
+
+## How to Run
+
+To run the development server:
 
 ```bash
 npm run dev
-# or
+```
+
+This will start the development server with Turbopack for faster builds. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can also use other package managers:
+```bash
+# Using yarn
 yarn dev
-# or
+
+# Using pnpm
 pnpm dev
-# or
+
+# Using bun
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How to Test
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To run the linting checks:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+```
 
-## Learn More
+For building the production version:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To start the production server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run start
+```
 
-## Deploy on Vercel
+## Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4
+- **Runtime**: React 19
+- **Build Tool**: Turbopack
+- **Linting**: ESLint with Next.js config
