@@ -318,7 +318,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                 <div className={`max-w-[80%] p-3 rounded-2xl ${
                   message.sender === 'user' 
                     ? 'bg-purple-100 text-gray-900 rounded-bl-2xl' 
-                    : 'bg-[#eef2f6] border border-[#e3e8ef] text-[#0d121c] rounded-br-2xl'
+                    : 'bg-white border border-[#e3e8ef] text-[#0d121c] rounded-br-2xl'
                 }`}>
                   {message.isLoading ? (
                     <div className="flex items-center gap-2">
