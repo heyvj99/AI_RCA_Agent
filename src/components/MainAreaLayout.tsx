@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Calendar, Tag, AlertTriangle, TrendingUp, BarChart3 } from 'lucide-react';
 import CollapsibleSidebar from './CollapsibleSidebar';
 import { Report } from './report';
@@ -11,6 +11,7 @@ interface MainAreaLayoutProps {
 }
 
 const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
+  const [isStreaming, setIsStreaming] = useState(false);
   // Sample data for the Report component
   const reportData = {
     title: "Root Cause Analysis Report",
@@ -85,13 +86,13 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
 
       {/* Center Panel - Report */}
       <div className="flex-1">
-        <Report {...reportData} />
+        <Report {...reportData} isStreaming={isStreaming} />
         {children}
       </div>
 
       {/* Right Panel - Chat */}
       <div className="w-96 p-0 border-l border-gray-200">
-        <ChatPanel />
+        <ChatPanel onStreamingChange={setIsStreaming} />
       </div>
     </div>
   );

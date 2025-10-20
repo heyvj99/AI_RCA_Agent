@@ -10,8 +10,7 @@ import {
   Message, 
   MessageAvatar, 
   MessageContent, 
-  MessageActions,
-  MessageAction
+  MessageActions
 } from './prompt-kit/message';
 import { 
   PromptInput, 
@@ -37,15 +36,12 @@ import {
   SearchCheck,
   Lightbulb,
   CheckCircle,
-  ShieldCheck,
-  Copy,
-  ThumbsUp,
-  ThumbsDown
+  ShieldCheck
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 interface ChatPanelProps {
   className?: string;
+  onStreamingChange?: (isStreaming: boolean) => void;
 }
 
 interface MessageHistoryItem {
@@ -53,8 +49,6 @@ interface MessageHistoryItem {
   content: string;
   timestamp: string;
   isLoading?: boolean;
-  liked?: boolean | null;
-  copied?: boolean;
   reasoning?: {
     visibleSteps: number;
     streamingStep: number;
@@ -66,7 +60,7 @@ interface MessageHistoryItem {
   };
 }
 
-const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
+const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange }) => {
   const [messageHistory, setMessageHistory] = useState<MessageHistoryItem[]>([
     {
       sender: 'agent',
@@ -77,29 +71,6 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
 
   const [newMessage, setNewMessage] = useState('');
   const [isNewTaskModalOpen, setIsNewTaskModalOpen] = useState(false);
-
-  // Message action handlers
-  const handleCopy = (messageIndex: number) => {
-    const message = messageHistory[messageIndex];
-    navigator.clipboard.writeText(message.content);
-    
-    setMessageHistory(prev => prev.map((msg, idx) => 
-      idx === messageIndex ? { ...msg, copied: true } : msg
-    ));
-    
-    // Reset copied state after 2 seconds
-    setTimeout(() => {
-      setMessageHistory(prev => prev.map((msg, idx) => 
-        idx === messageIndex ? { ...msg, copied: false } : msg
-      ));
-    }, 2000);
-  };
-
-  const handleLike = (messageIndex: number, liked: boolean) => {
-    setMessageHistory(prev => prev.map((msg, idx) => 
-      idx === messageIndex ? { ...msg, liked } : msg
-    ));
-  };
 
   // Custom reasoning component with Lucide React icons and streaming effect
   const ReasoningSteps = ({ visibleSteps = 5, streamingStep = 0, streamingText = "" }: { 
@@ -239,6 +210,17 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
     return () => clearTimeout(timer);
   }, [messageHistory]);
 
+  // Monitor streaming state and notify parent component
+  useEffect(() => {
+    const hasStreamingMessage = messageHistory.some(msg => 
+      msg.reasoning?.isStreaming === true
+    );
+    
+    if (onStreamingChange) {
+      onStreamingChange(hasStreamingMessage);
+    }
+  }, [messageHistory, onStreamingChange]);
+
   const [formData, setFormData] = useState({
     category: 'Dog Food',
     dateRange: '01 Apr → 30 June 2025',
@@ -342,68 +324,21 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
         <ChatContainerRoot key={messageHistory.length} className="flex-1 p-1">
           <ChatContainerContent className="flex flex-col gap-2">
             {messageHistory.map((message, index) => (
-              <Message key={index} className={message.sender === 'user' ? 'justify-end' : 'justify-start'}>
-                {message.sender === 'agent' && (
-                  <MessageAvatar src="/avatars/ai.svg" alt="AI" fallback="AI" />
-                )}
-                <div className="flex w-full flex-col gap-2">
+              <div key={index} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] p-3 rounded-2xl ${
+                  message.sender === 'user' 
+                    ? 'bg-purple-100 text-gray-900 rounded-bl-2xl' 
+                    : 'bg-[#eef2f6] border border-[#e3e8ef] text-[#0d121c] rounded-br-2xl'
+                }`}>
                   {message.isLoading ? (
-                    <div className="flex items-center gap-2 p-3 rounded-lg bg-gray-100">
+                    <div className="flex items-center gap-2">
                       <Loader variant="dots" size="sm" />
                       <span className="text-sm text-gray-500">Thinking...</span>
                     </div>
                   ) : (
-                    <MessageContent 
-                      markdown={message.sender === 'agent'} 
-                      className={message.sender === 'user' ? 'bg-purple-100 text-gray-900' : 'bg-transparent p-0'}
-                    >
-                      {message.content}
-                    </MessageContent>
+                    <p className="text-sm leading-5">{message.content}</p>
                   )}
-                  
-                  {!message.isLoading && (
-                    <div className="text-xs text-gray-500 mt-1">
-                      {message.timestamp}
-                    </div>
-                  )}
-
-                  {/* Message Actions for agent messages */}
-                  {message.sender === 'agent' && !message.isLoading && (
-                    <MessageActions className="self-end">
-                      <MessageAction tooltip="Copy to clipboard">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 rounded-full"
-                          onClick={() => handleCopy(index)}
-                        >
-                          <Copy className={`size-4 ${message.copied ? "text-green-500" : ""}`} />
-                        </Button>
-                      </MessageAction>
-
-                      <MessageAction tooltip="Helpful">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className={`h-8 w-8 rounded-full ${message.liked === true ? "bg-green-100 text-green-500" : ""}`}
-                          onClick={() => handleLike(index, true)}
-                        >
-                          <ThumbsUp className="size-4" />
-                        </Button>
-                      </MessageAction>
-
-                      <MessageAction tooltip="Not helpful">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className={`h-8 w-8 rounded-full ${message.liked === false ? "bg-red-100 text-red-500" : ""}`}
-                          onClick={() => handleLike(index, false)}
-                        >
-                          <ThumbsDown className="size-4" />
-                        </Button>
-                      </MessageAction>
-                    </MessageActions>
-                  )}
+                  <p className="text-xs text-gray-500 mt-1">{message.timestamp}</p>
                   
                   {/* Reasoning component for agent messages */}
                   {message.sender === 'agent' && message.reasoning && !message.isLoading && (
@@ -460,7 +395,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
                     </div>
                   )}
                 </div>
-              </Message>
+              </div>
             ))}
             <ChatContainerScrollAnchor />
           </ChatContainerContent>
