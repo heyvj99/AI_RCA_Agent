@@ -1,6 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
+import {
+  ChevronDown,
+  Home,
+  Triangle,
+  List,
+  Search,
+  Plus,
+  Clock,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 
 interface CollapsibleSidebarProps {
   className?: string;
@@ -34,40 +46,30 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-0.5">
                   <div className="font-medium text-base text-gray-900">
                     Blake
                   </div>
-                  <div className="font-semibold text-sm text-purple-600">
+                  <div className="font-medium text-xs text-gray-700">
                     Sales Analyst
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-center p-2">
-                <div className="w-4 h-4">
-                  <svg viewBox="0 0 16 16" className="w-full h-full">
-                    <path d="M8 12L4 8h8l-4 4z" fill="#697586"/>
-                  </svg>
-                </div>
+                <ChevronDown className="w-4 h-4 text-gray-500" />
               </div>
             </div>
 
             {/* Agent Description Container */}
             <div className="border-b border-violet-200 flex flex-col gap-3 pb-4 px-4 shrink-0">
               <div className="font-normal text-sm text-gray-500 leading-5">
-                <p className="mb-0">Specialized in identifying root causes of</p>
-                <p className="mb-0">sales performance gaps and providing</p>
-                <p>actionable insights.</p>
+                <p className="mb-0">Specialized in identifying root causes of sales performance gaps and providing actionable insights.</p>
               </div>
               
               {/* Knowledge Space */}
               <div className="bg-violet-50 border border-violet-200 h-8 items-center justify-between p-2 rounded-lg flex">
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4">
-                    <svg viewBox="0 0 16 16" className="w-full h-full">
-                      <path d="M8 2L2 6v8l6 4 6-4V6l-6-4z" fill="#7800f2"/>
-                    </svg>
-                  </div>
+                  <Home className="w-4 h-4 text-purple-600" />
                   <p className="font-medium text-xs text-gray-900">
                     Knowledge Space
                   </p>
@@ -147,11 +149,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                     <div className="flex flex-col gap-2 justify-center p-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <div className="w-4 h-4">
-                            <svg viewBox="0 0 16 16" className="w-full h-full">
-                              <path d="M8 1L3 6h10l-5-5z" fill="#7800f2"/>
-                            </svg>
-                          </div>
+                          <Triangle className="w-4 h-4 text-purple-600 fill-purple-600" />
                           <p className="font-semibold text-sm text-purple-600">
                             Root Cause Analysis
                           </p>
@@ -159,7 +157,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                         <p className="font-medium text-sm text-purple-600">→</p>
                       </div>
                       <p className="font-normal text-xs text-gray-500">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...
+                      Uncover key drivers of performance shifts across time, products, and channels.
                       </p>
                     </div>
                   </div>
@@ -167,51 +165,38 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                   {/* Gap to Plan */}
                   <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M8 2L2 6v8l6 4 6-4V6l-6-4z" fill="#697586"/>
-                        </svg>
-                      </div>
+                      <Home className="w-4 h-4 text-gray-600" />
                       <p className="font-medium text-sm text-gray-500">
                         Gap to Plan
                       </p>
                     </div>
                     <p className="font-normal text-xs text-gray-500">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...
+                    Track weekly variances to targets and pinpoint performance drivers to take corrective action.
                     </p>
                   </div>
 
                   {/* Weekly Business Review */}
                   <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M2 4h12v2H2V4zm0 4h12v2H2V8zm0 4h8v2H2v-2z" fill="#697586"/>
-                        </svg>
-                      </div>
+                      <List className="w-4 h-4 text-gray-600" />
                       <p className="font-medium text-sm text-gray-500">
                         Weekly Business Review
                       </p>
                     </div>
                     <p className="font-normal text-xs text-gray-500">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...
-                    </p>
+                    Auto-compile KPIs, highlights, and risks with week-over-week trends.                    </p>
                   </div>
 
                   {/* Phantom Inventory */}
                   <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M2 4h12v2H2V4zm0 4h12v2H2V8zm0 4h8v2H2v-2z" fill="#697586"/>
-                        </svg>
-                      </div>
+                      <List className="w-4 h-4 text-gray-600" />
                       <p className="font-medium text-sm text-gray-500">
                         Phantom Inventory
                       </p>
                     </div>
                     <p className="font-normal text-xs text-gray-500">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...
+                    Spot stock mismatches causing phantom inventory and sales loss.
                     </p>
                   </div>
                 </>
@@ -222,19 +207,11 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                   {/* Search and New Task */}
                   <div className="flex gap-4">
                     <div className="border border-gray-200 flex gap-2 items-center h-8 px-2 py-0 rounded-lg flex-1">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="#364152"/>
-                        </svg>
-                      </div>
+                      <Search className="w-4 h-4 text-gray-700" />
                       <p className="font-normal text-xs text-gray-500">Search for tasks...</p>
                     </div>
                     <div className="border border-purple-300 flex gap-2 items-center h-8 px-2 py-0 rounded-lg">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" fill="#7800f2"/>
-                        </svg>
-                      </div>
+                      <Plus className="w-4 h-4 text-purple-600" />
                       <p className="font-medium text-xs text-purple-600">New Task</p>
                     </div>
                   </div>
@@ -242,11 +219,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                   {/* Scheduled Tasks */}
                   <div className="flex flex-col gap-3">
                     <div className="flex gap-1.5 items-center">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zM7 6a1 1 0 0 1 2 0v2h2a1 1 0 1 1 0 2H9v2a1 1 0 1 1-2 0v-2H5a1 1 0 1 1 0-2h2V6z" fill="#364152"/>
-                        </svg>
-                      </div>
+                      <Clock className="w-4 h-4 text-gray-700" />
                       <p className="font-semibold text-xs text-gray-500">Scheduled (2)</p>
                     </div>
 
@@ -259,13 +232,9 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                             I'm trying to diagnose sales changes that happened in Q3. Focus on market trends and competitive factors.
                           </p>
                         </div>
-                        <div className="bg-white border border-gray-100 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                          <div className="w-4 h-4">
-                            <svg viewBox="0 0 16 16" className="w-full h-full">
-                              <path d="M8 1L3 6h10l-5-5z" fill="#697586"/>
-                            </svg>
-                          </div>
-                          <p className="font-normal text-xs text-gray-500">Root Cause Analysis</p>
+                        <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
+                          <Triangle className="w-4 h-4 text-gray-600" />
+                          <p className="font-normal text-xs text-gray-700">Root Cause Analysis</p>
                         </div>
                       </div>
                     </div>
@@ -279,13 +248,9 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                             I'm trying to diagnose sales changes that happened in Q3. Focus on market trends and competitive factors.
                           </p>
                         </div>
-                        <div className="bg-white border border-gray-100 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                          <div className="w-4 h-4">
-                            <svg viewBox="0 0 16 16" className="w-full h-full">
-                              <path d="M8 1L3 6h10l-5-5z" fill="#697586"/>
-                            </svg>
-                          </div>
-                          <p className="font-normal text-xs text-gray-500">Root Cause Analysis</p>
+                        <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
+                          <Triangle className="w-4 h-4 text-gray-600" />
+                          <p className="font-normal text-xs text-gray-700">Root Cause Analysis</p>
                         </div>
                       </div>
                     </div>
@@ -294,13 +259,9 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                     <div className="bg-white border border-violet-200 rounded-lg">
                       <div className="flex flex-col gap-3 p-3">
                         <p className="font-medium text-sm text-gray-900">Dog Treats – 01 Jul→31 Aug '25</p>
-                        <div className="bg-white border border-gray-100 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                          <div className="w-4 h-4">
-                            <svg viewBox="0 0 16 16" className="w-full h-full">
-                              <path d="M8 1L3 6h10l-5-5z" fill="#697586"/>
-                            </svg>
-                          </div>
-                          <p className="font-normal text-xs text-gray-500">Root Cause Analysis</p>
+                        <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
+                          <Triangle className="w-4 h-4 text-gray-600" />
+                          <p className="font-normal text-xs text-gray-700">Root Cause Analysis</p>
                         </div>
                       </div>
                     </div>
@@ -309,22 +270,14 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                   {/* Completed Tasks */}
                   <div className="flex flex-col gap-3">
                     <div className="flex gap-1.5 items-center">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 .02-.02z" fill="#364152"/>
-                        </svg>
-                      </div>
+                      <Check className="w-4 h-4 text-gray-700" />
                       <p className="font-semibold text-xs text-gray-500">Completed (23)</p>
                     </div>
 
                     {/* Completed Task 1 */}
                     <div className="border border-gray-200 h-22 rounded-lg">
                       <div className="flex gap-2 h-22 items-start p-3">
-                        <div className="w-4 h-4">
-                          <svg viewBox="0 0 16 16" className="w-full h-full">
-                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 .02-.02z" fill="#697586"/>
-                          </svg>
-                        </div>
+                        <Check className="w-4 h-4 text-gray-500" />
                         <div className="flex flex-col gap-3 h-16 text-gray-500">
                           <p className="font-medium h-10 leading-5 text-sm">Bulk-Value Packs: 01 Jul→30 Sep '25 vs 01 Apr→30 Jun '25</p>
                           <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
@@ -335,11 +288,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                     {/* Completed Task 2 */}
                     <div className="border border-gray-200 h-22 rounded-lg">
                       <div className="flex gap-2 h-22 items-start p-3">
-                        <div className="w-4 h-4">
-                          <svg viewBox="0 0 16 16" className="w-full h-full">
-                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 .02-.02z" fill="#697586"/>
-                          </svg>
-                        </div>
+                        <Check className="w-4 h-4 text-gray-500" />
                         <div className="flex flex-col gap-3 h-16 text-gray-500">
                           <p className="font-medium h-10 leading-5 text-sm">Prime Day: 10 Jul→16 Jul '25 vs 03 Jul→09 Jul '25</p>
                           <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
@@ -350,11 +299,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                     {/* Completed Task 3 */}
                     <div className="border border-gray-200 h-22 rounded-lg">
                       <div className="flex gap-2 h-22 items-start p-3">
-                        <div className="w-4 h-4">
-                          <svg viewBox="0 0 16 16" className="w-full h-full">
-                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 .02-.02z" fill="#697586"/>
-                          </svg>
-                        </div>
+                        <Check className="w-4 h-4 text-gray-500" />
                         <div className="flex flex-col gap-3 h-16 text-gray-500">
                           <p className="font-medium h-10 leading-5 text-sm">Dog Treats – 01 Jul→31 Aug 2025 vs 01 Jul→31 Aug 2024</p>
                           <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
@@ -369,22 +314,14 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                 <>
                   {/* Search Bar */}
                   <div className="border border-gray-200 flex gap-2 items-center p-2 rounded-lg">
-                    <div className="w-4 h-4">
-                      <svg viewBox="0 0 16 16" className="w-full h-full">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="#364152"/>
-                      </svg>
-                    </div>
+                    <Search className="w-4 h-4 text-gray-700" />
                     <p className="font-normal text-xs text-gray-500">Search for tasks...</p>
                   </div>
 
                   {/* To Do Tasks */}
                   <div className="flex flex-col gap-3">
                     <div className="flex gap-1.5 items-center">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M8 2a6 6 0 1 0 0 12A6 6 0 0 0 8 2zM7 6a1 1 0 0 1 2 0v2h2a1 1 0 1 1 0 2H9v2a1 1 0 1 1-2 0v-2H5a1 1 0 1 1 0-2h2V6z" fill="#364152"/>
-                        </svg>
-                      </div>
+                      <Clock className="w-4 h-4 text-gray-700" />
                       <p className="font-semibold text-xs text-gray-500">To do (3)</p>
                     </div>
 
@@ -443,11 +380,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                   {/* Completed Tasks */}
                   <div className="flex flex-col gap-3">
                     <div className="flex gap-1.5 items-center">
-                      <div className="w-4 h-4">
-                        <svg viewBox="0 0 16 16" className="w-full h-full">
-                          <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 .02-.02z" fill="#364152"/>
-                        </svg>
-                      </div>
+                      <Check className="w-4 h-4 text-gray-700" />
                       <p className="font-semibold text-xs text-gray-500">Completed (23)</p>
                     </div>
 
@@ -513,27 +446,19 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
               
               {/* Navigation Icons */}
               <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-violet-200 transition-colors">
-                <svg viewBox="0 0 16 16" className="w-4 h-4">
-                  <path d="M8 2L2 6v8l6 4 6-4V6l-6-4z" fill="#7800f2"/>
-                </svg>
+                <Home className="w-4 h-4 text-purple-600" />
               </div>
               
               <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-violet-200 transition-colors">
-                <svg viewBox="0 0 16 16" className="w-4 h-4">
-                  <path d="M8 1L3 6h10l-5-5z" fill="#7800f2"/>
-                </svg>
+                <Triangle className="w-4 h-4 text-purple-600" />
               </div>
               
               <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-violet-200 transition-colors">
-                <svg viewBox="0 0 16 16" className="w-4 h-4">
-                  <path d="M2 4h12v2H2V4zm0 4h12v2H2V8zm0 4h8v2H2v-2z" fill="#7800f2"/>
-                </svg>
+                <List className="w-4 h-4 text-purple-600" />
               </div>
               
               <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-violet-200 transition-colors">
-                <svg viewBox="0 0 16 16" className="w-4 h-4">
-                  <path d="M8 12L4 8h8l-4 4z" fill="#7800f2"/>
-                </svg>
+                <ChevronDown className="w-4 h-4 text-purple-600" />
               </div>
             </div>
           </div>
@@ -551,9 +476,11 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
         <div className={`transform transition-transform duration-300 ${
           isOpen ? 'rotate-0' : 'rotate-180'
         }`}>
-          <svg viewBox="0 0 16 16" className="w-4 h-4">
-            <path d={isOpen ? "M10 4L6 8l4 4" : "M6 4l4 4-4 4"} stroke="#697586" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          {isOpen ? (
+            <ChevronLeft className="w-4 h-4 text-gray-500" />
+          ) : (
+            <ChevronRight className="w-4 h-4 text-gray-500" />
+          )}
         </div>
       </button>
     </div>

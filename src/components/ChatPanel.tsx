@@ -36,7 +36,8 @@ import {
   SearchCheck,
   Lightbulb,
   CheckCircle,
-  ShieldCheck
+  ShieldCheck,
+  SlidersHorizontal
 } from 'lucide-react';
 
 interface ChatPanelProps {
@@ -304,7 +305,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
       {/* Header */}
       <div className="bg-white border-b border-[#e3e8ef] h-16 flex items-center justify-between px-4 shrink-0">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center shrink-0">
+          <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center shrink-0">
             <span className="text-white font-semibold text-xs">B</span>
           </div>
           <div className="flex flex-col justify-center">
@@ -527,8 +528,8 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                 onClick={() => setIsNewTaskModalOpen(!isNewTaskModalOpen)}
                 className="bg-white border border-violet-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-gray-50 transition-colors"
               >
-                <Sparkles className="w-4 h-4 text-[#6927da]" />
-                <span className="text-[#6927da] text-xs font-semibold">New Conf</span>
+                <SlidersHorizontal className="w-4 h-4 text-[#6927da]" />
+                <span className="text-[#6927da] text-xs font-semibold">Config</span>
               </button>
             </PromptInputActions>
           </div>

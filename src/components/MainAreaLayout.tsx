@@ -5,6 +5,9 @@ import { Calendar, Tag, AlertTriangle, TrendingUp, BarChart3 } from 'lucide-reac
 import CollapsibleSidebar from './CollapsibleSidebar';
 import { Report } from './report';
 import ChatPanel from './ChatPanel';
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from './ui/chart';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Bar, BarChart, LabelList } from 'recharts';
+import { performanceData, resourceData, chartConfig } from '../data/chartData';
 
 interface MainAreaLayoutProps {
   children?: React.ReactNode;
@@ -12,6 +15,40 @@ interface MainAreaLayoutProps {
 
 const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
   const [isStreaming, setIsStreaming] = useState(false);
+
+  // Sales performance data for bar chart
+  const salesPerformanceData = [
+    { month: "January", revenue: 52000 },
+    { month: "February", revenue: 48000 },
+    { month: "March", revenue: 51000 },
+    { month: "April", revenue: 62000 },
+    { month: "May", revenue: 60000 },
+    { month: "June", revenue: 58000 },
+    { month: "July", revenue: 54000 },
+    { month: "August", revenue: 66000 },
+    { month: "September", revenue: 69000 },
+    { month: "October", revenue: 75000 },
+    { month: "November", revenue: 72000 },
+    { month: "December", revenue: 88000 }
+  ];
+
+  // Chart config for bar chart
+  const barChartConfig = {
+    revenue: {
+      label: "Revenue",
+      color: "#3b82f6", // Blue
+    },
+    label: {
+      color: "#ffffff",
+    },
+  };
+
+  // Compute a responsive height for the vertical bar chart so it doesn't
+  // constrain the main layout horizontally while allowing ample vertical space.
+  // Each bar gets a fixed row height; extra space is added for padding/legend.
+  const barRowHeight = 32; // px per bar (thickness + gap) - reduced for tighter spacing
+  const barChartHeight = salesPerformanceData.length * barRowHeight + 120;
+
   // Sample data for the Report component
   const reportData = {
     title: "Root Cause Analysis Report",
@@ -51,29 +88,149 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
     ],
     charts: [
       {
-        title: "Performance Metrics Over Time",
+        title: "Sales Performance & Cost Analysis",
         content: (
-          <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center border border-gray-200">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <TrendingUp className="w-8 h-8 text-blue-600" />
-              </div>
-              <p className="text-sm text-gray-500">Performance Chart</p>
-            </div>
-          </div>
+          <ChartContainer config={chartConfig} className="w-full h-80">
+            <LineChart data={performanceData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis 
+                dataKey="month" 
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tick={{ fontSize: 12, fill: '#666' }}
+                tickFormatter={(value) => value.slice(0, 3)}
+              />
+              <YAxis 
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tick={{ fontSize: 12, fill: '#666' }}
+                tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+              />
+              <ChartTooltip 
+                content={<ChartTooltipContent />}
+                cursor={{ stroke: '#e5e7eb', strokeWidth: 1 }}
+              />
+              <ChartLegend 
+                content={<ChartLegendContent />}
+                verticalAlign="bottom"
+                height={36}
+                wrapperStyle={{ paddingTop: '20px' }}
+              />
+              <Line
+                type="monotone"
+                dataKey="sales"
+                stroke="var(--color-sales)"
+                strokeWidth={2}
+                dot={{ fill: "var(--color-sales)", strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="marketing"
+                stroke="var(--color-marketing)"
+                strokeWidth={2}
+                dot={{ fill: "var(--color-marketing)", strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="operations"
+                stroke="var(--color-operations)"
+                strokeWidth={2}
+                dot={{ fill: "var(--color-operations)", strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+              <Line
+                type="monotone"
+                dataKey="support"
+                stroke="var(--color-support)"
+                strokeWidth={2}
+                dot={{ fill: "var(--color-support)", strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+            </LineChart>
+          </ChartContainer>
         )
       },
       {
-        title: "Resource Utilization",
+        title: "Sales Performance vs Targets",
         content: (
-          <div className="h-64 bg-gray-50 rounded-lg flex items-center justify-center border border-gray-200">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                <BarChart3 className="w-8 h-8 text-green-600" />
-              </div>
-              <p className="text-sm text-gray-500">Resource Chart</p>
-            </div>
-          </div>
+          <ChartContainer
+            config={barChartConfig}
+            className="w-full aspect-auto"
+            style={{ height: barChartHeight }}
+          >
+            <BarChart
+              accessibilityLayer
+              data={salesPerformanceData}
+              layout="vertical"
+              margin={{
+                right: 96,
+                top: 16,
+                bottom: 56,
+                left: 24,
+              }}
+            >
+              <CartesianGrid horizontal={false} strokeDasharray="3 3" stroke="#f0f0f0" />
+              <YAxis
+                dataKey="month"
+                type="category"
+                tickLine={false}
+                tickMargin={10}
+                axisLine={false}
+                tickFormatter={(value) => value.slice(0, 3)}
+                width={0}
+                hide
+              />
+              <XAxis 
+                dataKey="revenue" 
+                type="number" 
+                tickLine={false}
+                axisLine={false}
+                tickMargin={8}
+                tick={{ fontSize: 8, fill: '#6bf280' }}
+                tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
+                domain={[0, 100000]}
+                hide
+              />
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent indicator="line" />}
+              />
+              <ChartLegend 
+                content={<ChartLegendContent />}
+                verticalAlign="bottom"
+                height={50}
+                wrapperStyle={{ paddingTop: '20px' }}
+              />
+              <Bar
+                dataKey="revenue"
+                layout="vertical"
+                fill="#3b82f6"
+                radius={[0, 8, 8, 0]}
+                maxBarSize={40}
+                barSize={20}
+              >
+                <LabelList
+                  dataKey="month"
+                  position="insideLeft"
+                  offset={12}
+                  className="fill-white font-semibold"
+                  fontSize={14}
+                />
+                <LabelList
+                  dataKey="revenue"
+                  position="right"
+                  offset={12}
+                  className="fill-slate-700 font-medium"
+                  fontSize={13}
+                  formatter={(value: number) => `$${(value / 1000).toFixed(0)}k`}
+                />
+              </Bar>
+            </BarChart>
+          </ChartContainer>
         )
       }
     ]
