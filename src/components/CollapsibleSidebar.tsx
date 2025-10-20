@@ -116,7 +116,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                   <p className={`text-xs whitespace-nowrap ${
                     activeTab === 'blake' ? 'font-semibold text-gray-900' : 'font-medium text-gray-500'
                   }`}>
-                    Blake's Task
+                    Blake&apos;s Task
                   </p>
                 </button>
                 <button 
@@ -227,9 +227,9 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                     <div className="bg-white border border-violet-200 rounded-lg">
                       <div className="flex flex-col gap-3 p-3">
                         <div className="flex flex-col gap-2">
-                          <p className="font-medium text-sm text-gray-900">Dog Food: 01 Apr→30 Jun '25</p>
+                          <p className="font-medium text-sm text-gray-900">Dog Food: 01 Apr→30 Jun &#39;25</p>
                           <p className="font-normal text-xs text-gray-500">
-                            I'm trying to diagnose sales changes that happened in Q3. Focus on market trends and competitive factors.
+                            I&apos;m trying to diagnose sales changes that happened in Q3. Focus on market trends and competitive factors.
                           </p>
                         </div>
                         <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
@@ -243,9 +243,9 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                     <div className="bg-white border border-violet-200 rounded-lg">
                       <div className="flex flex-col gap-3 p-3">
                         <div className="flex flex-col gap-2">
-                          <p className="font-medium text-sm text-gray-900">Prime Day: 10 Jul→16 Jul '25 vs 03 Jul→09 Jul '25</p>
+                          <p className="font-medium text-sm text-gray-900">Prime Day: 10 Jul→16 Jul &#39;25 vs 03 Jul→09 Jul &#39;25</p>
                           <p className="font-normal text-xs text-gray-500">
-                            I'm trying to diagnose sales changes that happened in Q3. Focus on market trends and competitive factors.
+                            I&apos;m trying to diagnose sales changes that happened in Q3. Focus on market trends and competitive factors.
                           </p>
                         </div>
                         <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
@@ -258,7 +258,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                     {/* Scheduled Task 3 */}
                     <div className="bg-white border border-violet-200 rounded-lg">
                       <div className="flex flex-col gap-3 p-3">
-                        <p className="font-medium text-sm text-gray-900">Dog Treats – 01 Jul→31 Aug '25</p>
+                        <p className="font-medium text-sm text-gray-900">Dog Treats – 01 Jul→31 Aug &#39;25</p>
                         <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
                           <Triangle className="w-4 h-4 text-gray-600" />
                           <p className="font-normal text-xs text-gray-700">Root Cause Analysis</p>
@@ -279,7 +279,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                       <div className="flex gap-2 h-22 items-start p-3">
                         <Check className="w-4 h-4 text-gray-500" />
                         <div className="flex flex-col gap-3 h-16 text-gray-500">
-                          <p className="font-medium h-10 leading-5 text-sm">Bulk-Value Packs: 01 Jul→30 Sep '25 vs 01 Apr→30 Jun '25</p>
+                        <p className="font-medium h-10 leading-5 text-sm">Bulk-Value Packs: 01 Jul→30 Sep &#39;25 vs 01 Apr→30 Jun &#39;25</p>
                           <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
                         </div>
                       </div>
@@ -290,7 +290,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                       <div className="flex gap-2 h-22 items-start p-3">
                         <Check className="w-4 h-4 text-gray-500" />
                         <div className="flex flex-col gap-3 h-16 text-gray-500">
-                          <p className="font-medium h-10 leading-5 text-sm">Prime Day: 10 Jul→16 Jul '25 vs 03 Jul→09 Jul '25</p>
+                          <p className="font-medium h-10 leading-5 text-sm">Prime Day: 10 Jul→16 Jul &#39;25 vs 03 Jul→09 Jul &#39;25</p>
                           <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
                         </div>
                       </div>
@@ -408,7 +408,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                           </svg>
                         </div>
                         <div className="flex flex-col gap-3 h-16 text-gray-500">
-                          <p className="font-medium h-10 leading-5 text-sm">Post Slack Update: "Prime Day Conversion Drivers – Top Insights"</p>
+                          <p className="font-medium h-10 leading-5 text-sm">Post Slack Update: &quot;Prime Day Conversion Drivers – Top Insights&quot;</p>
                           <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
                         </div>
                       </div>

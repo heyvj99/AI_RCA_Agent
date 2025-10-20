@@ -31,10 +31,8 @@ AvatarImage.displayName = "AvatarImage"
 
 const AvatarFallback = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & {
-    delayMs?: number
-  }
->(({ className, delayMs, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(

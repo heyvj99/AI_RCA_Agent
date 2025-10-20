@@ -7,12 +7,6 @@ import {
   ChatContainerScrollAnchor 
 } from './prompt-kit/chat-container';
 import { 
-  Message, 
-  MessageAvatar, 
-  MessageContent, 
-  MessageActions
-} from './prompt-kit/message';
-import { 
   PromptInput, 
   PromptInputTextarea, 
   PromptInputActions
@@ -389,7 +383,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                               ))
                             }}
                           >
-                            This will take about 2 minutes. Get notified when it's done—we'll also email blake@ciq.ai.
+                            This will take about 2 minutes. Get notified when it&apos;s done—we&apos;ll also email blake@ciq.ai.
                           </SystemMessage>
                         </div>
                       )}

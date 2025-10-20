@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Calendar, Tag, AlertTriangle, TrendingUp, BarChart3 } from 'lucide-react';
+import { Calendar, Tag, AlertTriangle } from 'lucide-react';
 import CollapsibleSidebar from './CollapsibleSidebar';
 import { Report } from './report';
 import ChatPanel from './ChatPanel';
@@ -190,7 +190,7 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
                 tickLine={false}
                 axisLine={false}
                 tickMargin={8}
-                tick={{ fontSize: 8, fill: '#6bf280' }}
+                tick={{ fontSize: 8, fill: '#6b7280' }}
                 tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`}
                 domain={[0, 100000]}
                 hide

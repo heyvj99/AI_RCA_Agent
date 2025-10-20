@@ -1,8 +1,8 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { ChevronDown, ChevronRight, Search, BarChart3, SearchCheck, Lightbulb, CheckCircle } from "lucide-react"
-import React, { createContext, useContext, useState, useEffect } from "react"
+import { ChevronDown, ChevronRight } from "lucide-react"
+import React, { createContext, useContext, useState } from "react"
 import { Markdown } from "./markdown"
 
 type ReasoningContextType = {
