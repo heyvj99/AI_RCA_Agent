@@ -7,7 +7,7 @@ import { Report } from './report';
 import ChatPanel from './ChatPanel';
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from './ui/chart';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Bar, BarChart, LabelList } from 'recharts';
-import { performanceData, resourceData, chartConfig } from '../data/chartData';
+import { performanceData, chartConfig } from '../data/chartData';
 
 interface MainAreaLayoutProps {
   children?: React.ReactNode;

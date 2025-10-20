@@ -350,7 +350,7 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                         </div>
                         <div className="flex flex-col gap-3 flex-1">
                           <p className="font-medium h-10 leading-5 text-sm text-gray-900">
-                            Share RCA Deck: SOV Loss on "Grain-Free" to Marketing Head
+                            Share RCA Deck: SOV Loss on &quot;Grain-Free&quot; to Marketing Head
                           </p>
                           <div className="bg-white border border-gray-100 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
                             <p className="font-normal text-xs text-gray-500">Root Cause Analysis</p>

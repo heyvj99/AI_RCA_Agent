@@ -287,12 +287,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
     }
   };
 
-  const handleNewTaskSubmit = () => {
-    // Handle the new task submission
-    console.log('New task submitted:', formData);
-    // You can add logic here to send the task to your backend or update the UI
-    setIsNewTaskModalOpen(false);
-  };
+  // Removed unused handleNewTaskSubmit to satisfy linter
 
   return (
     <div className={`bg-violet-50 border-l border-[#e3e8ef] h-full flex flex-col ${className}`}>

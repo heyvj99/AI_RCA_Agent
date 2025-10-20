@@ -58,7 +58,7 @@ export function ReasoningTrigger({ children, className, ...props }: ReasoningTri
     throw new Error("ReasoningTrigger must be used within a Reasoning component")
   }
 
-  const { isOpen, setIsOpen, isStreaming } = context
+  const { isOpen, setIsOpen } = context
 
   return (
     <button
