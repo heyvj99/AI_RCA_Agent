@@ -10,7 +10,8 @@ import {
   Message, 
   MessageAvatar, 
   MessageContent, 
-  MessageActions
+  MessageActions,
+  MessageAction
 } from './prompt-kit/message';
 import { 
   PromptInput, 
@@ -22,14 +23,26 @@ import {
   ReasoningContent,
   ReasoningTrigger,
 } from './prompt-kit/reasoning';
+import { Loader } from './prompt-kit/loader';
+import { SystemMessage } from './prompt-kit/system-message';
 import { 
   Sparkles, 
   X, 
   Menu, 
   ChevronDown, 
   Calendar, 
-  Plus 
+  Plus,
+  Search,
+  BarChart3,
+  SearchCheck,
+  Lightbulb,
+  CheckCircle,
+  ShieldCheck,
+  Copy,
+  ThumbsUp,
+  ThumbsDown
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface ChatPanelProps {
   className?: string;
@@ -39,10 +52,17 @@ interface MessageHistoryItem {
   sender: 'agent' | 'user';
   content: string;
   timestamp: string;
+  isLoading?: boolean;
+  liked?: boolean | null;
+  copied?: boolean;
   reasoning?: {
-    text: string;
+    visibleSteps: number;
+    streamingStep: number;
+    streamingText: string;
     isStreaming: boolean;
     isOpen: boolean;
+    systemMessageDismissed?: boolean;
+    showSystemMessage?: boolean;
   };
 }
 
@@ -58,75 +78,152 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '' }) => {
   const [newMessage, setNewMessage] = useState('');
   const [isNewTaskModalOpen, setIsNewTaskModalOpen] = useState(false);
 
-  // Simulated streaming function with markdown content for reasoning
-  const simulateReasoningStream = async (
-    messageIndex: number,
-    setText: (text: string) => void,
-    setIsStreaming: (streaming: boolean) => void
-  ) => {
-    const reasoning = `# Analyzing: "${newMessage}"
+  // Message action handlers
+  const handleCopy = (messageIndex: number) => {
+    const message = messageHistory[messageIndex];
+    navigator.clipboard.writeText(message.content);
+    
+    setMessageHistory(prev => prev.map((msg, idx) => 
+      idx === messageIndex ? { ...msg, copied: true } : msg
+    ));
+    
+    // Reset copied state after 2 seconds
+    setTimeout(() => {
+      setMessageHistory(prev => prev.map((msg, idx) => 
+        idx === messageIndex ? { ...msg, copied: false } : msg
+      ));
+    }, 2000);
+  };
 
-## Step 1: Understanding the Query
-I need to analyze your request about **${newMessage}** and provide relevant insights.
+  const handleLike = (messageIndex: number, liked: boolean) => {
+    setMessageHistory(prev => prev.map((msg, idx) => 
+      idx === messageIndex ? { ...msg, liked } : msg
+    ));
+  };
 
-## Step 2: Data Processing
-- Gathering relevant sales data 📊
-- Analyzing performance metrics 📈
-- Identifying key patterns 🔍
+  // Custom reasoning component with Lucide React icons and streaming effect
+  const ReasoningSteps = ({ visibleSteps = 5, streamingStep = 0, streamingText = "" }: { 
+    visibleSteps?: number; 
+    streamingStep?: number; 
+    streamingText?: string; 
+  }) => {
+    const steps = [
+      { icon: Search, title: "Step 1: Query Analysis", description: "Analyzing your sales inquiry to identify key metrics and patterns" },
+      { icon: BarChart3, title: "Step 2: Data Collection", description: "Gathering sales performance data, customer metrics, and transaction records" },
+      { icon: SearchCheck, title: "Step 3: Root Cause Investigation", description: "Examining conversion rates, cart abandonment, and customer behavior patterns" },
+      { icon: Lightbulb, title: "Step 4: Insight Generation", description: "Identifying performance gaps and optimization opportunities" },
+      { icon: CheckCircle, title: "Analysis Complete", description: "Ready to provide actionable recommendations" }
+    ];
 
-## Step 3: Insight Generation
-\`\`\`
-Processing your request...
-Generating insights...
-Preparing recommendations...
-\`\`\`
+    return (
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-gray-700 mb-3">Analyzing your query</h3>
+        {steps.slice(0, visibleSteps).map((step, index) => {
+          const IconComponent = step.icon;
+          const isCurrentlyStreaming = index === streamingStep - 1;
+          const displayText = isCurrentlyStreaming ? streamingText : step.description;
+          
+          return (
+            <div key={index} className="flex items-start gap-3">
+              <IconComponent className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <h4 className="text-xs font-medium text-gray-600">{step.title}</h4>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {displayText}
+                  {isCurrentlyStreaming && <span className="animate-pulse">|</span>}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
 
-> **Status:** Analysis complete! Ready to provide detailed insights.`
-
-    setIsStreaming(true)
-    setText("")
+  // Simulated streaming function for reasoning steps with text streaming
+  const simulateReasoningStream = async (messageIndex: number) => {
+    const steps = [
+      "Analyzing your sales inquiry to identify key metrics and patterns",
+      "Gathering sales performance data, customer metrics, and transaction records", 
+      "Examining conversion rates, cart abandonment, and customer behavior patterns",
+      "Identifying performance gaps and optimization opportunities",
+      "Ready to provide actionable recommendations"
+    ];
 
     // Update the message with streaming state - keep closed by default
     setMessageHistory(prev => prev.map((msg, idx) => 
       idx === messageIndex ? {
         ...msg,
-        reasoning: { text: "", isStreaming: true, isOpen: false }
+        reasoning: { 
+          visibleSteps: 0, 
+          streamingStep: 0,
+          streamingText: "",
+          isStreaming: true, 
+          isOpen: false,
+          systemMessageDismissed: false,
+          showSystemMessage: false
+        }
       } : msg
     ))
 
-    // Simulate character-by-character streaming
-    for (let i = 0; i <= reasoning.length; i++) {
-      const currentText = reasoning.slice(0, i)
-      setText(currentText)
+    // Show system message after 1 second delay
+    setTimeout(() => {
+      setMessageHistory(prev => prev.map((msg, idx) => 
+        idx === messageIndex ? {
+          ...msg,
+          reasoning: msg.reasoning ? { 
+            ...msg.reasoning, 
+            showSystemMessage: true 
+          } : undefined
+        } : msg
+      ))
+    }, 2000)
+
+    // Simulate step-by-step streaming with text animation
+    for (let step = 1; step <= 5; step++) {
+      const currentStepText = steps[step - 1];
       
-      // Update the message with current reasoning text - preserve user's open/close state
+      // First reveal the step
       setMessageHistory(prev => prev.map((msg, idx) => 
         idx === messageIndex ? {
           ...msg,
           reasoning: { 
-            text: currentText, 
+            visibleSteps: step, 
+            streamingStep: step,
+            streamingText: "",
             isStreaming: true, 
-            isOpen: msg.reasoning?.isOpen || false 
+            isOpen: msg.reasoning?.isOpen || false,
+            systemMessageDismissed: msg.reasoning?.systemMessageDismissed || false,
+            showSystemMessage: msg.reasoning?.showSystemMessage || false
           }
         } : msg
       ))
-      
-      await new Promise((resolve) => setTimeout(resolve, 20))
-    }
 
-    setIsStreaming(false)
-    
-    // Final update with completed reasoning - preserve user's open/close state
-    setMessageHistory(prev => prev.map((msg, idx) => 
-      idx === messageIndex ? {
-        ...msg,
-        reasoning: { 
-          text: reasoning, 
-          isStreaming: false, 
-          isOpen: msg.reasoning?.isOpen || false 
-        }
-      } : msg
-    ))
+      // Then stream the text character by character
+      for (let i = 0; i <= currentStepText.length; i++) {
+        const currentText = currentStepText.slice(0, i);
+        
+        setMessageHistory(prev => prev.map((msg, idx) => 
+          idx === messageIndex ? {
+            ...msg,
+            reasoning: { 
+              visibleSteps: step, 
+              streamingStep: step,
+              streamingText: currentText,
+              isStreaming: step < 5 || i < currentStepText.length, 
+              isOpen: msg.reasoning?.isOpen || false,
+              systemMessageDismissed: msg.reasoning?.systemMessageDismissed || false,
+              showSystemMessage: msg.reasoning?.showSystemMessage || false
+            }
+          } : msg
+        ))
+        
+        await new Promise((resolve) => setTimeout(resolve, 30))
+      }
+      
+      // Small pause between steps
+      await new Promise((resolve) => setTimeout(resolve, 500))
+    }
   };
 
   // Force scroll to bottom when messages change
@@ -165,24 +262,48 @@ Preparing recommendations...
       const currentMessage = newMessage;
       setNewMessage('');
       
+      // Add loading agent message immediately
+      const loadingAgentMessage: MessageHistoryItem = {
+        sender: 'agent',
+        content: '',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isLoading: true,
+        reasoning: {
+          visibleSteps: 0,
+          streamingStep: 0,
+          streamingText: "",
+          isStreaming: false,
+          isOpen: false,
+          systemMessageDismissed: false,
+          showSystemMessage: false
+        }
+      };
+      
+      setMessageHistory(prev => [...prev, loadingAgentMessage]);
+      
       // Simulate agent response after a short delay
       setTimeout(() => {
         const agentResponse: MessageHistoryItem = {
           sender: 'agent',
           content: `I understand you're asking about "${currentMessage}". Let me help you analyze this and provide insights.`,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isLoading: false,
           reasoning: {
-            text: "",
+            visibleSteps: 0,
+            streamingStep: 0,
+            streamingText: "",
             isStreaming: false,
-            isOpen: false
+            isOpen: false,
+            systemMessageDismissed: false,
+            showSystemMessage: false
           }
         };
         
         setMessageHistory(prev => {
-          const updatedHistory = [...prev, agentResponse];
+          const updatedHistory = [...prev.slice(0, -1), agentResponse];
           // Trigger reasoning for the agent message
           const agentMessageIndex = updatedHistory.length - 1;
-          simulateReasoningStream(agentMessageIndex, () => {}, () => {});
+          simulateReasoningStream(agentMessageIndex);
           return updatedHistory;
         });
       }, 1000);
@@ -221,17 +342,71 @@ Preparing recommendations...
         <ChatContainerRoot key={messageHistory.length} className="flex-1 p-1">
           <ChatContainerContent className="flex flex-col gap-2">
             {messageHistory.map((message, index) => (
-              <div key={index} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] p-3 rounded-2xl ${
-                  message.sender === 'user' 
-                    ? 'bg-purple-100 text-gray-900 rounded-bl-2xl' 
-                    : 'bg-[#eef2f6] border border-[#e3e8ef] text-[#0d121c] rounded-br-2xl'
-                }`}>
-                  <p className="text-sm leading-5">{message.content}</p>
-                  <p className="text-xs text-gray-500 mt-1">{message.timestamp}</p>
+              <Message key={index} className={message.sender === 'user' ? 'justify-end' : 'justify-start'}>
+                {message.sender === 'agent' && (
+                  <MessageAvatar src="/avatars/ai.svg" alt="AI" fallback="AI" />
+                )}
+                <div className="flex w-full flex-col gap-2">
+                  {message.isLoading ? (
+                    <div className="flex items-center gap-2 p-3 rounded-lg bg-gray-100">
+                      <Loader variant="dots" size="sm" />
+                      <span className="text-sm text-gray-500">Thinking...</span>
+                    </div>
+                  ) : (
+                    <MessageContent 
+                      markdown={message.sender === 'agent'} 
+                      className={message.sender === 'user' ? 'bg-purple-100 text-gray-900' : 'bg-transparent p-0'}
+                    >
+                      {message.content}
+                    </MessageContent>
+                  )}
+                  
+                  {!message.isLoading && (
+                    <div className="text-xs text-gray-500 mt-1">
+                      {message.timestamp}
+                    </div>
+                  )}
+
+                  {/* Message Actions for agent messages */}
+                  {message.sender === 'agent' && !message.isLoading && (
+                    <MessageActions className="self-end">
+                      <MessageAction tooltip="Copy to clipboard">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 rounded-full"
+                          onClick={() => handleCopy(index)}
+                        >
+                          <Copy className={`size-4 ${message.copied ? "text-green-500" : ""}`} />
+                        </Button>
+                      </MessageAction>
+
+                      <MessageAction tooltip="Helpful">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className={`h-8 w-8 rounded-full ${message.liked === true ? "bg-green-100 text-green-500" : ""}`}
+                          onClick={() => handleLike(index, true)}
+                        >
+                          <ThumbsUp className="size-4" />
+                        </Button>
+                      </MessageAction>
+
+                      <MessageAction tooltip="Not helpful">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className={`h-8 w-8 rounded-full ${message.liked === false ? "bg-red-100 text-red-500" : ""}`}
+                          onClick={() => handleLike(index, false)}
+                        >
+                          <ThumbsDown className="size-4" />
+                        </Button>
+                      </MessageAction>
+                    </MessageActions>
+                  )}
                   
                   {/* Reasoning component for agent messages */}
-                  {message.sender === 'agent' && message.reasoning && (
+                  {message.sender === 'agent' && message.reasoning && !message.isLoading && (
                     <div className="mt-3">
                       <Reasoning 
                         isStreaming={message.reasoning.isStreaming} 
@@ -249,16 +424,43 @@ Preparing recommendations...
                           {message.reasoning.isStreaming ? "Thinking..." : "Show AI reasoning"}
                         </ReasoningTrigger>
                         <ReasoningContent
-                          markdown
                           className="ml-2 border-l-2 border-l-slate-200 px-2 pb-1 dark:border-l-slate-700"
                         >
-                          {message.reasoning.text}
+                          <ReasoningSteps 
+                            visibleSteps={message.reasoning.visibleSteps}
+                            streamingStep={message.reasoning.streamingStep}
+                            streamingText={message.reasoning.streamingText}
+                          />
                         </ReasoningContent>
                       </Reasoning>
+                      
+                      {/* System Message with Action - appears during streaming */}
+                      {message.reasoning.isStreaming && message.reasoning.showSystemMessage && !message.reasoning.systemMessageDismissed && (
+                        <div className="mt-3">
+                          <SystemMessage
+                            variant="action"
+                            fill
+                            icon={<ShieldCheck className="size-4 h-[1lh]" />}
+                            cta={{
+                              label: "Enable browser notifications",
+                            }}
+                            onClose={() => {
+                              setMessageHistory(prev => prev.map((msg, idx) => 
+                                idx === index ? {
+                                  ...msg,
+                                  reasoning: msg.reasoning ? { ...msg.reasoning, systemMessageDismissed: true } : undefined
+                                } : msg
+                              ))
+                            }}
+                          >
+                            This will take about 2 minutes. Get notified when it's done—we'll also email blake@ciq.ai.
+                          </SystemMessage>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
-              </div>
+              </Message>
             ))}
             <ChatContainerScrollAnchor />
           </ChatContainerContent>

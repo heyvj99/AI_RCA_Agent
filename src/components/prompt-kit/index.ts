@@ -13,3 +13,9 @@ export * from './code-block'
 
 // Reasoning components
 export * from './reasoning'
+
+// Loader components
+export * from './loader'
+
+// System message components
+export * from './system-message'
