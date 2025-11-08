@@ -37,6 +37,7 @@ import {
 interface ChatPanelProps {
   className?: string;
   onStreamingChange?: (isStreaming: boolean) => void;
+  onNewQuery?: (query: string) => void;
 }
 
 interface MessageHistoryItem {
@@ -55,7 +56,7 @@ interface MessageHistoryItem {
   };
 }
 
-const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange }) => {
+const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange, onNewQuery }) => {
   const [messageHistory, setMessageHistory] = useState<MessageHistoryItem[]>([
     {
       sender: 'agent',
@@ -238,6 +239,11 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
       setMessageHistory(prev => [...prev, userMessage]);
       const currentMessage = newMessage;
       setNewMessage('');
+      
+      // Notify parent component about new query to create a task
+      if (onNewQuery) {
+        onNewQuery(currentMessage);
+      }
       
       // Add loading agent message immediately
       const loadingAgentMessage: MessageHistoryItem = {

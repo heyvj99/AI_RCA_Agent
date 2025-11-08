@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, useImperativeHandle, forwardRef } from 'react';
 import {
   ChevronDown,
   Home,
@@ -13,18 +13,129 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react';
+import TaskCard, { TaskCardProps } from './TaskCard';
+
+interface Task extends Omit<TaskCardProps, 'className'> {
+  id: string;
+}
+
+export interface CollapsibleSidebarRef {
+  addNewTask: (task: Omit<Task, 'id' | 'status'>) => string;
+  moveTaskToCompleted: (taskId: string, pendingTasks?: number) => void;
+  completeTaskItems: (taskId: string) => void;
+}
 
 interface CollapsibleSidebarProps {
   className?: string;
+  onTaskAdded?: (taskId: string) => void;
 }
 
-const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' }) => {
+const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarProps>(
+  ({ className = '', onTaskAdded }, ref) => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('skills');
+  const [isInProgressOpen, setIsInProgressOpen] = useState(true);
+  const [isCompletedOpen, setIsCompletedOpen] = useState(true);
+  
+  // Task management state
+  const [inProgressTasks, setInProgressTasks] = useState<Task[]>([]);
+  const [completedTasks, setCompletedTasks] = useState<Task[]>([
+    // Existing completed tasks
+    {
+      id: 'task-1',
+      tag: 'Root Cause Analysis',
+      mainText: "Shark Ninja: 10 Jul→16 Jul '25 vs 03 Jul→09 Jul '25",
+      question: "Which SKUs or categories show the highest price volatility right now?",
+      status: 'completed',
+      completedAt: '13 Apr 2025 at 12:34pm',
+      pendingTasks: 2,
+      highlighted: true,
+    },
+    {
+      id: 'task-2',
+      tag: 'Root Cause Analysis',
+      mainText: "Kellog's: 01 Jul→31 Aug 2025 vs 01 Jul→31 Aug 2024",
+      question: "Which SKUs or categories show the highest price volatility right now?",
+      status: 'completed',
+      completedAt: '13 Apr 2025 at 12:34pm',
+      pendingTasks: 0,
+    },
+  ]);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
+
+  // Add a new task to in-progress section
+  const addNewTask = useCallback((task: Omit<Task, 'id' | 'status'>) => {
+    const newTask: Task = {
+      ...task,
+      id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      status: 'in-progress',
+    };
+    setInProgressTasks(prev => [newTask, ...prev]);
+    onTaskAdded?.(newTask.id);
+    return newTask.id;
+  }, [onTaskAdded]);
+
+  // Move task from in-progress to completed (when report is generated)
+  const moveTaskToCompleted = useCallback((taskId: string, pendingTasks: number = 2) => {
+    // Find the task first
+    setInProgressTasks(prev => {
+      const task = prev.find(t => t.id === taskId);
+      if (!task) return prev;
+      
+      const now = new Date();
+      const day = now.getDate();
+      const month = now.toLocaleString('en-GB', { month: 'short' });
+      const year = now.getFullYear();
+      const hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'pm' : 'am';
+      const displayHours = (hours % 12 || 12).toString().padStart(2, '0');
+      
+      const completedTask: Task = {
+        ...task,
+        status: 'completed',
+        completedAt: `${day} ${month} ${year} at ${displayHours}:${minutes}${ampm}`,
+        pendingTasks,
+        highlighted: true,
+      };
+      
+      // Update completed tasks - check for duplicates before adding
+      setCompletedTasks(completedPrev => {
+        // Check if task already exists in completed tasks
+        const alreadyExists = completedPrev.some(t => t.id === taskId);
+        if (alreadyExists) {
+          // If it exists, update it instead of adding a duplicate
+          return completedPrev.map(t => t.id === taskId ? completedTask : t);
+        }
+        // Otherwise, add it to the beginning
+        return [completedTask, ...completedPrev];
+      });
+      
+      // Remove from in-progress
+      return prev.filter(t => t.id !== taskId);
+    });
+  }, []);
+
+  // Update task to mark all tasks as completed
+  const completeTaskItems = useCallback((taskId: string) => {
+    setCompletedTasks(prev => 
+      prev.map(task => 
+        task.id === taskId 
+          ? { ...task, pendingTasks: 0, highlighted: false }
+          : task
+      )
+    );
+  }, []);
+
+  // Expose functions to parent component via ref
+  useImperativeHandle(ref, () => ({
+    addNewTask,
+    moveTaskToCompleted,
+    completeTaskItems,
+  }));
 
   return (
     <div className={`relative ${className}`}>
@@ -94,10 +205,11 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
 
             {/* Tabs Container */}
             <div className="flex flex-col gap-4 p-4 shrink-0">
-              <div className="bg-gray-50 border border-gray-200 flex gap-0.5 items-center rounded-lg">
+              <div className="bg-gray-50 p-1 border border-gray-200 flex gap-0.5 items-center rounded-lg">
                 <button 
-                  className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 hover:bg-gray-100 ${
-                    activeTab === 'skills' ? 'bg-white border border-gray-300 shadow-sm' : ''
+                  className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 
+                    ${ activeTab === 'skills' ? '' : ' hover:bg-gray-100' }
+                    ${ activeTab === 'skills' ? 'bg-violet-100 border border-gray-100 shadow-sm' : ''
                   }`}
                   onClick={() => setActiveTab('skills')}
                 >
@@ -108,39 +220,28 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                   </p>
                 </button>
                 <button 
-                  className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 hover:bg-gray-100 ${
-                    activeTab === 'blake' ? 'bg-white border border-gray-300 shadow-sm' : ''
-                  }`}
-                  onClick={() => setActiveTab('blake')}
-                >
-                  <p className={`text-xs whitespace-nowrap ${
-                    activeTab === 'blake' ? 'font-semibold text-gray-900' : 'font-medium text-gray-500'
-                  }`}>
-                    Blake&apos;s Task
-                  </p>
-                </button>
-                <button 
-                  className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 hover:bg-gray-100 ${
-                    activeTab === 'my' ? 'bg-white border border-gray-300 shadow-sm' : ''
+                  className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 
+                    ${ activeTab === 'my' ? '' : 'hover:bg-gray-100 ' }
+                    ${activeTab === 'my' ? 'bg-violet-100 shadow-sm border border-gray-100' : ''
                   }`}
                   onClick={() => setActiveTab('my')}
                 >
                   <p className={`text-xs whitespace-nowrap ${
                     activeTab === 'my' ? 'font-semibold text-gray-900' : 'font-medium text-gray-500'
                   }`}>
-                    My Tasks
+                    Tasks
                   </p>
                   <div className={`px-1.5 py-0.5 rounded-full ml-1.5 ${
-                    activeTab === 'my' ? 'bg-gray-50 border border-gray-200' : 'bg-white border border-gray-200'
+                    activeTab === 'my' ? 'bg-violet-200 border border-violet-300' : 'bg-white border border-gray-200'
                   }`}>
-                    <p className="font-medium text-xs text-gray-600 text-center">3</p>
+                    <p className="font-medium text-xs text-gray-900 text-center">{inProgressTasks.length + completedTasks.length}</p>
                   </div>
                 </button>
               </div>
             </div>
 
             {/* Tasks Container */}
-            <div className="flex-1 flex flex-col gap-4 px-4 py-0 overflow-y-auto">
+            <div className="flex-1 flex flex-col gap-4 px-4 py-0 pb-16 overflow-y-auto">
               {/* Conditional content based on active tab */}
               {activeTab === 'skills' && (
                 <>
@@ -202,232 +303,85 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
                 </>
               )}
 
-              {activeTab === 'blake' && (
-                <>
-                  {/* Search and New Task */}
-                  <div className="flex gap-4">
-                    <div className="border border-gray-200 flex gap-2 items-center h-8 px-2 py-0 rounded-lg flex-1">
-                      <Search className="w-4 h-4 text-gray-700" />
-                      <p className="font-normal text-xs text-gray-500">Search for tasks...</p>
-                    </div>
-                    <div className="border border-purple-300 flex gap-2 items-center h-8 px-2 py-0 rounded-lg">
-                      <Plus className="w-4 h-4 text-purple-600" />
-                      <p className="font-medium text-xs text-purple-600">New Task</p>
-                    </div>
-                  </div>
-
-                  {/* Scheduled Tasks */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex gap-1.5 items-center">
-                      <Clock className="w-4 h-4 text-gray-700" />
-                      <p className="font-semibold text-xs text-gray-500">Scheduled (2)</p>
-                    </div>
-
-                    {/* Scheduled Task 1 */}
-                    <div className="bg-white border border-violet-200 rounded-lg">
-                      <div className="flex flex-col gap-3 p-3">
-                        <div className="flex flex-col gap-2">
-                          <p className="font-medium text-sm text-gray-900">Dog Food: 01 Apr→30 Jun &#39;25</p>
-                          <p className="font-normal text-xs text-gray-500">
-                            I&apos;m trying to diagnose sales changes that happened in Q3. Focus on market trends and competitive factors.
-                          </p>
-                        </div>
-                        <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                          <Triangle className="w-4 h-4 text-gray-600" />
-                          <p className="font-normal text-xs text-gray-700">Root Cause Analysis</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Scheduled Task 2 */}
-                    <div className="bg-white border border-violet-200 rounded-lg">
-                      <div className="flex flex-col gap-3 p-3">
-                        <div className="flex flex-col gap-2">
-                          <p className="font-medium text-sm text-gray-900">Prime Day: 10 Jul→16 Jul &#39;25 vs 03 Jul→09 Jul &#39;25</p>
-                          <p className="font-normal text-xs text-gray-500">
-                            I&apos;m trying to diagnose sales changes that happened in Q3. Focus on market trends and competitive factors.
-                          </p>
-                        </div>
-                        <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                          <Triangle className="w-4 h-4 text-gray-600" />
-                          <p className="font-normal text-xs text-gray-700">Root Cause Analysis</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Scheduled Task 3 */}
-                    <div className="bg-white border border-violet-200 rounded-lg">
-                      <div className="flex flex-col gap-3 p-3">
-                        <p className="font-medium text-sm text-gray-900">Dog Treats – 01 Jul→31 Aug &#39;25</p>
-                        <div className="w-fit bg-purple-50 border border-purple-200 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                          <Triangle className="w-4 h-4 text-gray-600" />
-                          <p className="font-normal text-xs text-gray-700">Root Cause Analysis</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Completed Tasks */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex gap-1.5 items-center">
-                      <Check className="w-4 h-4 text-gray-700" />
-                      <p className="font-semibold text-xs text-gray-500">Completed (23)</p>
-                    </div>
-
-                    {/* Completed Task 1 */}
-                    <div className="border border-gray-200 h-22 rounded-lg">
-                      <div className="flex gap-2 h-22 items-start p-3">
-                        <Check className="w-4 h-4 text-gray-500" />
-                        <div className="flex flex-col gap-3 h-16 text-gray-500">
-                        <p className="font-medium h-10 leading-5 text-sm">Bulk-Value Packs: 01 Jul→30 Sep &#39;25 vs 01 Apr→30 Jun &#39;25</p>
-                          <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Completed Task 2 */}
-                    <div className="border border-gray-200 h-22 rounded-lg">
-                      <div className="flex gap-2 h-22 items-start p-3">
-                        <Check className="w-4 h-4 text-gray-500" />
-                        <div className="flex flex-col gap-3 h-16 text-gray-500">
-                          <p className="font-medium h-10 leading-5 text-sm">Prime Day: 10 Jul→16 Jul &#39;25 vs 03 Jul→09 Jul &#39;25</p>
-                          <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Completed Task 3 */}
-                    <div className="border border-gray-200 h-22 rounded-lg">
-                      <div className="flex gap-2 h-22 items-start p-3">
-                        <Check className="w-4 h-4 text-gray-500" />
-                        <div className="flex flex-col gap-3 h-16 text-gray-500">
-                          <p className="font-medium h-10 leading-5 text-sm">Dog Treats – 01 Jul→31 Aug 2025 vs 01 Jul→31 Aug 2024</p>
-                          <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
-              )}
-
               {activeTab === 'my' && (
                 <>
                   {/* Search Bar */}
-                  <div className="border border-gray-200 flex gap-2 items-center p-2 rounded-lg">
+                  <div className="border border-gray-200 flex gap-2 items-center p-2 rounded-lg bg-white">
                     <Search className="w-4 h-4 text-gray-700" />
-                    <p className="font-normal text-xs text-gray-500">Search for tasks...</p>
+                    <input
+                      type="text"
+                      placeholder="Search for tasks"
+                      className="flex-1 bg-transparent border-none outline-none font-normal text-xs text-gray-500 placeholder:text-gray-500"
+                    />
                   </div>
 
-                  {/* To Do Tasks */}
+                  {/* In Progress Section */}
+                  {inProgressTasks.length > 0 && (
+                    <div className="flex flex-col gap-3">
+                      <button
+                        onClick={() => setIsInProgressOpen(!isInProgressOpen)}
+                        className="flex items-center justify-between"
+                      >
+                        <div className="flex gap-1.5 items-center">
+                          <List className="w-4 h-4 text-gray-700" />
+                          <p className="font-semibold text-xs text-gray-700">In Progress ({inProgressTasks.length})</p>
+                        </div>
+                        <ChevronDown
+                          className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                            isInProgressOpen ? '' : '-rotate-90'
+                          }`}
+                        />
+                      </button>
+
+                      {isInProgressOpen && (
+                        <>
+                          {inProgressTasks.map((task) => (
+                            <TaskCard
+                              key={task.id}
+                              tag={task.tag}
+                              mainText={task.mainText}
+                              question={task.question}
+                              status={task.status}
+                            />
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Completed Section */}
                   <div className="flex flex-col gap-3">
-                    <div className="flex gap-1.5 items-center">
-                      <Clock className="w-4 h-4 text-gray-700" />
-                      <p className="font-semibold text-xs text-gray-500">To do (3)</p>
-                    </div>
-
-                    {/* To Do Task 1 */}
-                    <div className="bg-white border border-violet-200 rounded-lg">
-                      <div className="flex gap-2 items-start p-3">
-                        <div className="flex items-center justify-center pt-0.5 w-4">
-                          <div className="border border-purple-300 rounded w-3.5 h-3.5"></div>
-                        </div>
-                        <div className="flex flex-col gap-3 flex-1">
-                          <p className="font-medium h-10 leading-5 text-sm text-gray-900">
-                            Approve Q4 Promo Calendar with Prime Day Learnings
-                          </p>
-                          <div className="bg-white border border-gray-100 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                            <p className="font-normal text-xs text-gray-500">Root Cause Analysis</p>
-                          </div>
-                        </div>
+                    <button
+                      onClick={() => setIsCompletedOpen(!isCompletedOpen)}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex gap-1.5 items-center">
+                        <Check className="w-4 h-4 text-gray-700" />
+                        <p className="font-semibold text-xs text-gray-700">Completed ({completedTasks.length})</p>
                       </div>
-                    </div>
+                      <ChevronDown
+                        className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                          isCompletedOpen ? '' : '-rotate-90'
+                        }`}
+                      />
+                    </button>
 
-                    {/* To Do Task 2 */}
-                    <div className="bg-white border border-violet-200 rounded-lg">
-                      <div className="flex gap-2 items-start p-3">
-                        <div className="flex items-center justify-center pt-0.5 w-4">
-                          <div className="border border-purple-300 rounded w-3.5 h-3.5"></div>
-                        </div>
-                        <div className="flex flex-col gap-3 flex-1">
-                          <p className="font-medium h-10 leading-5 text-sm text-gray-900">
-                            Share RCA Deck: SOV Loss on &quot;Grain-Free&quot; to Marketing Head
-                          </p>
-                          <div className="bg-white border border-gray-100 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                            <p className="font-normal text-xs text-gray-500">Root Cause Analysis</p>
-                          </div>
-                        </div>
+                    {isCompletedOpen && (
+                      <div className="flex flex-col gap-3">
+                        {completedTasks.map((task) => (
+                          <TaskCard
+                            key={task.id}
+                            tag={task.tag}
+                            mainText={task.mainText}
+                            question={task.question}
+                            status={task.status}
+                            completedAt={task.completedAt}
+                            pendingTasks={task.pendingTasks}
+                            highlighted={task.highlighted}
+                          />
+                        ))}
                       </div>
-                    </div>
-
-                    {/* To Do Task 3 */}
-                    <div className="bg-white border border-violet-200 rounded-lg">
-                      <div className="flex gap-2 items-start p-3">
-                        <div className="flex items-center justify-center pt-0.5 w-4">
-                          <div className="border border-purple-300 rounded w-3.5 h-3.5"></div>
-                        </div>
-                        <div className="flex flex-col gap-3 flex-1">
-                          <p className="font-medium h-10 leading-5 text-sm text-gray-900">
-                            Forward CPC Optimization Playbook to Retail Media Mgr
-                          </p>
-                          <div className="bg-white border border-gray-100 flex gap-1.5 items-center h-6 px-1.5 py-0 rounded-md">
-                            <p className="font-normal text-xs text-gray-500">Root Cause Analysis</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Completed Tasks */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex gap-1.5 items-center">
-                      <Check className="w-4 h-4 text-gray-700" />
-                      <p className="font-semibold text-xs text-gray-500">Completed (23)</p>
-                    </div>
-
-                    {/* Completed Task 1 */}
-                    <div className="border border-gray-200 h-22 rounded-lg">
-                      <div className="flex gap-2 h-22 items-start p-3">
-                        <div className="w-4 h-4">
-                          <svg viewBox="0 0 16 16" className="w-full h-full">
-                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 .02-.02z" fill="#697586"/>
-                          </svg>
-                        </div>
-                        <div className="flex flex-col gap-3 h-16 text-gray-500">
-                          <p className="font-medium h-10 leading-5 text-sm">Review Suggested Price Correction for Mid-Size Packs</p>
-                          <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Completed Task 2 */}
-                    <div className="border border-gray-200 h-22 rounded-lg">
-                      <div className="flex gap-2 h-22 items-start p-3">
-                        <div className="w-4 h-4">
-                          <svg viewBox="0 0 16 16" className="w-full h-full">
-                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 .02-.02z" fill="#697586"/>
-                          </svg>
-                        </div>
-                        <div className="flex flex-col gap-3 h-16 text-gray-500">
-                          <p className="font-medium h-10 leading-5 text-sm">Post Slack Update: &quot;Prime Day Conversion Drivers – Top Insights&quot;</p>
-                          <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Completed Task 3 */}
-                    <div className="border border-gray-200 h-22 rounded-lg">
-                      <div className="flex gap-2 h-22 items-start p-3">
-                        <div className="w-4 h-4">
-                          <svg viewBox="0 0 16 16" className="w-full h-full">
-                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 .02-.02z" fill="#697586"/>
-                          </svg>
-                        </div>
-                        <div className="flex flex-col gap-3 h-16 text-gray-500">
-                          <p className="font-medium h-10 leading-5 text-sm">Schedule Meeting: RCA on Dog Treats CVR Drop</p>
-                          <p className="font-normal leading-3 text-xs">Completed on 23 Sep 2025 at 17:55pm</p>
-                        </div>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </>
               )}
@@ -485,7 +439,9 @@ const CollapsibleSidebar: React.FC<CollapsibleSidebarProps> = ({ className = '' 
       </button>
     </div>
   );
-};
+});
+
+CollapsibleSidebar.displayName = 'CollapsibleSidebar';
 
 export default CollapsibleSidebar;
 

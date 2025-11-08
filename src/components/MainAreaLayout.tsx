@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, Tag, AlertTriangle } from 'lucide-react';
-import CollapsibleSidebar from './CollapsibleSidebar';
+import CollapsibleSidebar, { CollapsibleSidebarRef } from './CollapsibleSidebar';
 import { Report } from './report';
 import ChatPanel from './ChatPanel';
 import SalesCostLineChart from './charts/SalesCostLineChart';
@@ -14,6 +14,37 @@ interface MainAreaLayoutProps {
 
 const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
   const [isStreaming, setIsStreaming] = useState(false);
+  const [currentTaskId, setCurrentTaskId] = useState<string | null>(null);
+  const [previousStreamingState, setPreviousStreamingState] = useState(false);
+  const sidebarRef = useRef<CollapsibleSidebarRef>(null);
+
+  // Track streaming state changes to move task to completed when report is generated
+  useEffect(() => {
+    // When streaming stops (was true, now false), move task to completed
+    // Only move if we actually had streaming (previousStreamingState was true)
+    if (previousStreamingState && !isStreaming && currentTaskId) {
+      const taskIdToMove = currentTaskId;
+      // Clear currentTaskId immediately to prevent duplicate calls
+      setCurrentTaskId(null);
+      // Small delay to ensure state updates are complete
+      setTimeout(() => {
+        sidebarRef.current?.moveTaskToCompleted(taskIdToMove, 2);
+      }, 100);
+    }
+    setPreviousStreamingState(isStreaming);
+  }, [isStreaming, currentTaskId, previousStreamingState]);
+
+  // Handle new query - add task to sidebar
+  const handleNewQuery = (query: string) => {
+    if (sidebarRef.current) {
+      const taskId = sidebarRef.current.addNewTask({
+        tag: 'Root Cause Analysis',
+        mainText: query.length > 60 ? query.substring(0, 60) + '...' : query,
+        question: query,
+      });
+      setCurrentTaskId(taskId);
+    }
+  };
 
   // Sample data for the Report component
   const reportData = {
@@ -67,7 +98,7 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
   return (
     <div className="flex h-[calc(100vh-80px)] bg-gray-50">
       {/* Left Panel - Collapsible Sidebar */}
-      <CollapsibleSidebar />
+      <CollapsibleSidebar ref={sidebarRef} className='z-10 overflow-visible' />
 
       {/* Center Panel - Report */}
       <div className="flex-1">
@@ -77,7 +108,10 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
 
       {/* Right Panel - Chat */}
       <div className="w-96 p-0 border-l border-gray-200">
-        <ChatPanel onStreamingChange={setIsStreaming} />
+        <ChatPanel 
+          onStreamingChange={setIsStreaming}
+          onNewQuery={handleNewQuery}
+        />
       </div>
     </div>
   );
