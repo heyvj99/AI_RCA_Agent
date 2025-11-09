@@ -116,7 +116,7 @@ export function Report({
                 <RecommendedTasks tasks={recommendedTasks} />
               )}
               
-              <KeyFindings findings={findings} />
+              {/* <KeyFindings findings={findings} /> */}
               
               {charts.map((chart, index) => (
                 <ChartSection 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Calendar, Tag, AlertTriangle } from 'lucide-react';
+import { Calendar, ScanText, ListTodo } from 'lucide-react';
 import CollapsibleSidebar, { CollapsibleSidebarRef } from './CollapsibleSidebar';
 import { Report } from './report';
 import type { RecommendedTask } from './report';
@@ -51,11 +51,17 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
   const reportData = {
     title: "Root Cause Analysis Report",
     metadata: [
-      { icon: <Calendar className="w-4 h-4" />, label: "Dec 15, 2024" },
-      { icon: <Tag className="w-4 h-4" />, label: "System Analysis" },
-      { icon: <AlertTriangle className="w-4 h-4" />, label: "Critical Issues Found" }
+      { icon: <Calendar className="w-4 h-4" />, label: "Oct 15, 2025" },
+      { icon: <ScanText className="w-4 h-4" />, label: "Root Cause Analysis" },
+      { icon: <ListTodo className="w-4 h-4" />, label: "5 Recommended Tasks" }
     ],
-    executiveSummary: "This comprehensive analysis reveals significant performance degradation in our system infrastructure. The investigation identified multiple root causes including insufficient server resources, inefficient database queries, and memory allocation issues. Immediate action is required to prevent further system instability.",
+    executiveSummary: `Overall sales showed a **moderate fluctuation** this period, influenced by shifts in **pricing, promotions, and product availability**.
+
+- **Performance Overview:** Sales changed by **9%** compared to the previous period, mainly due to movement in high-contribution categories.
+
+- **Key Drivers:**
+  - 📉 *Decline factors:* Lower ad visibility, competitor discounting, and temporary stockouts.
+  - 📈 *Growth levers:* Successful promotions and improved conversion on refreshed product pages.`,
     findings: [
       {
         title: "Server Resource Constraints",
