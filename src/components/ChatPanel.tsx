@@ -38,6 +38,7 @@ interface ChatPanelProps {
   className?: string;
   onStreamingChange?: (isStreaming: boolean) => void;
   onNewQuery?: (query: string) => void;
+  externalQuery?: string | null;
 }
 
 interface MessageHistoryItem {
@@ -56,7 +57,7 @@ interface MessageHistoryItem {
   };
 }
 
-const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange, onNewQuery }) => {
+const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange, onNewQuery, externalQuery }) => {
   const [messageHistory, setMessageHistory] = useState<MessageHistoryItem[]>([
     {
       sender: 'agent',
@@ -67,6 +68,69 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
 
   const [newMessage, setNewMessage] = useState('');
   const [isNewTaskModalOpen, setIsNewTaskModalOpen] = useState(false);
+  const [lastExternalQuery, setLastExternalQuery] = useState<string | null>(null);
+
+  // Handle external query submission (from suggestion cards)
+  useEffect(() => {
+    if (externalQuery && externalQuery !== lastExternalQuery && externalQuery.trim()) {
+      setLastExternalQuery(externalQuery);
+      // Submit the query as if user typed it
+      const userMessage: MessageHistoryItem = {
+        sender: 'user',
+        content: externalQuery,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      
+      setMessageHistory(prev => [...prev, userMessage]);
+      
+      // Notify parent component about new query to create a task
+      if (onNewQuery) {
+        onNewQuery(externalQuery);
+      }
+      
+      // Add loading agent message immediately
+      const loadingAgentMessage: MessageHistoryItem = {
+        sender: 'agent',
+        content: '',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isLoading: true,
+        reasoning: {
+          visibleSteps: 0,
+          streamingStep: 0,
+          streamingText: "",
+          isStreaming: false,
+          isOpen: false,
+          systemMessageDismissed: false,
+          showSystemMessage: false
+        }
+      };
+      
+      setMessageHistory(prev => [...prev, loadingAgentMessage]);
+      
+      // Simulate agent response after a short delay
+      setTimeout(() => {
+        const agentResponse: MessageHistoryItem = {
+          sender: 'agent',
+          content: `I understand you're asking about "${externalQuery}". Let me help you analyze this and provide insights.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isLoading: false,
+          reasoning: {
+            visibleSteps: 0,
+            streamingStep: 0,
+            streamingText: "",
+            isStreaming: false,
+            isOpen: false,
+            systemMessageDismissed: false,
+            showSystemMessage: false
+          }
+        };
+        
+        setMessageHistory(prev => prev.map((msg, idx) => 
+          idx === prev.length - 1 ? agentResponse : msg
+        ));
+      }, 1000);
+    }
+  }, [externalQuery, lastExternalQuery, onNewQuery]);
 
   // Custom reasoning component with Lucide React icons and streaming effect
   const ReasoningSteps = ({ visibleSteps = 5, streamingStep = 0, streamingText = "" }: { 

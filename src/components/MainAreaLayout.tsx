@@ -17,6 +17,9 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [currentTaskId, setCurrentTaskId] = useState<string | null>(null);
   const [previousStreamingState, setPreviousStreamingState] = useState(false);
+  const [hasQueries, setHasQueries] = useState(false);
+  const [hasCompletedFirstReport, setHasCompletedFirstReport] = useState(false);
+  const [externalQuery, setExternalQuery] = useState<string | null>(null);
   const sidebarRef = useRef<CollapsibleSidebarRef>(null);
 
   // Track streaming state changes to move task to completed when report is generated
@@ -27,6 +30,8 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
       const taskIdToMove = currentTaskId;
       // Clear currentTaskId immediately to prevent duplicate calls
       setCurrentTaskId(null);
+      // Mark that we've completed at least one report
+      setHasCompletedFirstReport(true);
       // Small delay to ensure state updates are complete
       setTimeout(() => {
         sidebarRef.current?.moveTaskToCompleted(taskIdToMove, 2);
@@ -37,6 +42,7 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
 
   // Handle new query - add task to sidebar
   const handleNewQuery = (query: string) => {
+    setHasQueries(true); // Mark that queries have been submitted
     if (sidebarRef.current) {
       const taskId = sidebarRef.current.addNewTask({
         tag: 'Root Cause Analysis',
@@ -45,6 +51,13 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
       });
       setCurrentTaskId(taskId);
     }
+  };
+
+  // Handle query selection from suggestion cards
+  const handleQuerySelect = (query: string) => {
+    setExternalQuery(query);
+    // Clear it after a moment so the same query can be triggered again if needed
+    setTimeout(() => setExternalQuery(null), 100);
   };
 
   // Sample data for the Report component
@@ -166,7 +179,12 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
 
       {/* Center Panel - Report */}
       <div className="flex-1">
-        <Report {...reportData} isStreaming={isStreaming} />
+        <Report 
+          {...reportData} 
+          isStreaming={isStreaming || (hasQueries && !hasCompletedFirstReport)} 
+          isInitialState={!hasQueries}
+          onQuerySelect={handleQuerySelect}
+        />
         {children}
       </div>
 
@@ -175,6 +193,7 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
         <ChatPanel 
           onStreamingChange={setIsStreaming}
           onNewQuery={handleNewQuery}
+          externalQuery={externalQuery}
         />
       </div>
     </div>

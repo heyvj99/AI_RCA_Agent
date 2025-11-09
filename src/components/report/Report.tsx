@@ -4,6 +4,7 @@ import { KeyFindings } from './KeyFindings';
 import { Recommendations } from './Recommendations';
 import { ChartSection } from './ChartSection';
 import { RecommendedTasks, type RecommendedTask } from './RecommendedTasks';
+import { QuerySuggestions } from './QuerySuggestions';
 import { Skeleton } from '../ui/skeleton';
 
 interface ReportProps {
@@ -31,6 +32,8 @@ interface ReportProps {
     fullWidth?: boolean;
   }[];
   isStreaming?: boolean;
+  isInitialState?: boolean;
+  onQuerySelect?: (query: string) => void;
 }
 
 export function Report({
@@ -42,7 +45,27 @@ export function Report({
   recommendedTasks,
   charts = [],
   isStreaming = false,
+  isInitialState = false,
+  onQuerySelect,
 }: ReportProps) {
+  // Show initial state with query suggestions
+  if (isInitialState && !isStreaming) {
+    return (
+      <div 
+        className="w-full h-full bg-gray-50 relative flex flex-col"
+        style={{
+          backgroundImage: 'radial-gradient(circle, slate-50/15% 0.25px, transparent 0.25px)',
+          backgroundSize: '18px 18px',
+          backgroundPosition: '0 0',
+        }}
+      >
+        <div className="relative z-10 flex-1 overflow-auto flex justify-center">
+          <QuerySuggestions onQuerySelect={onQuerySelect} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div 
       className="w-full h-full bg-gray-50 relative flex flex-col"

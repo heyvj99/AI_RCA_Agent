@@ -197,7 +197,7 @@ export function RecommendedTasks({
               key={index}
               className="flex-1 bg-gradient-to-b from-violet-50 to-white border border-violet-200 rounded-sm p-2 flex flex-col justify-between min-h-[80px]"
             >
-              <p className="text-lg font-medium text-violet-600">{card.value}</p>
+              <p className="text-lg font-medium text-gray-600">{card.value}</p>
               <p className="text-sm text-slate-500">
                 {card.label.split(card.boldText || '').map((part, i) => (
                   <span key={i}>
