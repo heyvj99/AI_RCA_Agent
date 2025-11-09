@@ -16,7 +16,6 @@ export interface TaskCardProps {
 
 const TaskCard: React.FC<TaskCardProps> = ({
   tag,
-  mainText,
   question,
   status,
   completedAt,
@@ -65,8 +64,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
         {/* Main Text */}
         <p className="font-medium text-sm text-gray-900 leading-5">
-           {/* {mainText} */}
-           Kellogg's: 10 Jul→16 Jul '25 vs 03 Jul→09 Jul '25
+           Kellogg&apos;s: 10 Jul→16 Jul &apos;25 vs 03 Jul→09 Jul &apos;25
         </p>
 
         {/* Question */}

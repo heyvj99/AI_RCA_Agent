@@ -1,7 +1,5 @@
 import { ReportHeader } from './ReportHeader';
 import { ExecutiveSummary } from './ExecutiveSummary';
-import { KeyFindings } from './KeyFindings';
-import { Recommendations } from './Recommendations';
 import { ChartSection } from './ChartSection';
 import { RecommendedTasks, type RecommendedTask } from './RecommendedTasks';
 import { QuerySuggestions } from './QuerySuggestions';
@@ -40,8 +38,6 @@ export function Report({
   title,
   metadata,
   executiveSummary,
-  findings,
-  recommendations,
   recommendedTasks,
   charts = [],
   isStreaming = false,

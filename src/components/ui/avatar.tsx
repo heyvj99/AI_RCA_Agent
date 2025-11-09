@@ -1,4 +1,5 @@
 import * as React from "react"
+import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 
@@ -17,13 +18,21 @@ const Avatar = React.forwardRef<
 ))
 Avatar.displayName = "Avatar"
 
+interface AvatarImageProps extends Omit<React.ComponentPropsWithoutRef<typeof Image>, 'src' | 'alt'> {
+  src?: string;
+  alt: string;
+}
+
 const AvatarImage = React.forwardRef<
-  HTMLImageElement,
-  React.ImgHTMLAttributes<HTMLImageElement>
->(({ className, ...props }, ref) => (
-  <img
+  React.ElementRef<typeof Image>,
+  AvatarImageProps
+>(({ className, alt, src, ...props }, ref) => (
+  <Image
     ref={ref}
-    className={cn("aspect-square h-full w-full", className)}
+    src={src || ''}
+    alt={alt}
+    fill
+    className={cn("object-cover", className)}
     {...props}
   />
 ))
@@ -31,8 +40,8 @@ AvatarImage.displayName = "AvatarImage"
 
 const AvatarFallback = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { delayMs?: number }
->(({ className, delayMs, ...props }, ref) => (
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(

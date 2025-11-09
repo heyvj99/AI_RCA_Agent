@@ -1,6 +1,6 @@
 'use client';
 
-import { MessageCircle, MoreVertical, Sparkles, ArrowUp, ArrowDown, UserPlus, TrendingUp, ChevronLeft, ChevronRight, MoreHorizontal, ChevronDown, X, CheckSquare, Download, Share } from 'lucide-react';
+import { MessageCircle, MoreVertical, Sparkles, ArrowUp, ArrowDown, UserPlus, TrendingUp, ChevronLeft, ChevronRight, MoreHorizontal, ChevronDown, X, CheckSquare, Share } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '../ui/table';
 import { Progress } from '../ui/progress';
@@ -87,7 +87,6 @@ export function RecommendedTasks({
   const dropdownRefs = useRef<Map<string, HTMLDivElement>>(new Map());
   const todoCount = tasks.length - completedCount;
   const totalTasks = tasks.length;
-  const progressPercentage = totalTasks > 0 ? (completedCount / totalTasks) * 100 : 0;
 
   // Close dropdown when clicking outside
   useEffect(() => {

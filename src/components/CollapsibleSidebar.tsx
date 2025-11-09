@@ -3,12 +3,8 @@
 import React, { useState, useCallback, useImperativeHandle, forwardRef } from 'react';
 import {
   ChevronDown,
-  Home,
-  Triangle,
   List,
   Search,
-  Plus,
-  Clock,
   Check,
   ChevronLeft,
   ChevronRight,

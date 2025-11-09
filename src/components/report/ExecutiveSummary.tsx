@@ -25,7 +25,7 @@ export function ExecutiveSummary({ content }: ExecutiveSummaryProps) {
               </p>
             ),
             ul: ({ children, ...props }) => {
-              const node = (props as any).node;
+              const node = (props as { node?: { parent?: { type?: string } } }).node;
               const isNested = node?.parent?.type === 'listItem';
               return (
                 <ul className={`space-y-1.5 ${isNested ? 'ml-4 mt-1 mb-1' : 'mb-2'} list-none`}>
@@ -34,7 +34,7 @@ export function ExecutiveSummary({ content }: ExecutiveSummaryProps) {
               );
             },
             li: ({ children, ...props }) => {
-              const node = (props as any).node;
+              const node = (props as { node?: { parent?: { type?: string } } }).node;
               const isNested = node?.parent?.type === 'listItem';
               
               // Helper function to replace emoji with icons
@@ -64,7 +64,7 @@ export function ExecutiveSummary({ content }: ExecutiveSummaryProps) {
                 }
                 
                 if (React.isValidElement(node)) {
-                  const element = node as React.ReactElement<any>;
+                  const element = node as React.ReactElement<{ children?: React.ReactNode }>;
                   return React.cloneElement(element, {
                     ...element.props,
                     children: React.Children.map(element.props.children, (child, idx) => 
