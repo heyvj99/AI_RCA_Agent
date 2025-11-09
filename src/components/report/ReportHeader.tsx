@@ -8,7 +8,7 @@ interface ReportHeaderProps {
 
 export function ReportHeader({ title, metadata }: ReportHeaderProps) {
   return (
-    <div className="border-b border-gray-200 bg-white">
+    <div className="border-b border-gray-200 bg-white w-full">
       <div className="px-4 py-4">
         <h1 className="text-xl font-semibold text-gray-900">{title}</h1>
       </div>

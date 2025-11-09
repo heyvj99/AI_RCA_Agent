@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, Tag, AlertTriangle } from 'lucide-react';
 import CollapsibleSidebar, { CollapsibleSidebarRef } from './CollapsibleSidebar';
 import { Report } from './report';
+import type { RecommendedTask } from './report';
 import ChatPanel from './ChatPanel';
 import SalesCostLineChart from './charts/SalesCostLineChart';
 import SalesRevenueBarChart from './charts/SalesRevenueBarChart';
@@ -83,6 +84,63 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
         link: { text: "Memory monitoring setup", url: "#" }
       }
     ],
+    recommendedTasks: [
+      {
+        id: '1',
+        title: 'Boost Discounts on Slow-Movers',
+        description: 'These SKUs have been sitting in inventory longer than expected. A small discount increase can unlock higher conversions.',
+        skuCount: 12,
+        metric: {
+          type: 'Revenue',
+          direction: 'up'
+        },
+        impact: 'High'
+      },
+      {
+        id: '2',
+        title: 'Shift Ad Budget to Winning Category',
+        description: 'Home Appliances are outperforming all other categories in CTR and ROAS this week.',
+        skuCount: 4,
+        metric: {
+          type: 'Costs',
+          direction: 'down'
+        },
+        impact: 'Medium'
+      },
+      {
+        id: '3',
+        title: 'Create Bundles to Lift AOV',
+        description: 'Customers frequently buy these items together. Bundling can tap into natural purchase behavior.',
+        skuCount: 11,
+        metric: {
+          type: 'AOV',
+          direction: 'up'
+        },
+        impact: 'High'
+      },
+      {
+        id: '4',
+        title: 'Run a Targeted Abandoned Cart Campaign',
+        description: 'Several products are missing key terms, limiting organic discovery.',
+        skuCount: null,
+        metric: {
+          type: 'Ad Spend',
+          direction: 'down'
+        },
+        impact: 'Low'
+      },
+      {
+        id: '5',
+        title: 'Optimize SEO for Low-Visibility SKUs',
+        description: 'A spike in recent abandoned carts shows strong recoverable intent.',
+        skuCount: 8,
+        metric: {
+          type: 'Conversion',
+          direction: 'up'
+        },
+        impact: 'High'
+      }
+    ] as RecommendedTask[],
     charts: [
       {
         title: "Sales Performance & Cost Analysis",
@@ -98,7 +156,7 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
   return (
     <div className="flex h-[calc(100vh-80px)] bg-gray-50">
       {/* Left Panel - Collapsible Sidebar */}
-      <CollapsibleSidebar ref={sidebarRef} className='z-10 overflow-visible' />
+      <CollapsibleSidebar ref={sidebarRef}/>
 
       {/* Center Panel - Report */}
       <div className="flex-1">

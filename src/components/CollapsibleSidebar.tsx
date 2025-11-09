@@ -12,6 +12,14 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  ListTodo,
+  Zap,
+  Map,
+  ScanText,
+  Goal,
+  Calendar,
+  Package,
+  MapIcon,
 } from 'lucide-react';
 import TaskCard, { TaskCardProps } from './TaskCard';
 
@@ -180,7 +188,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
               {/* Knowledge Space */}
               <div className="bg-violet-50 border border-violet-200 h-8 items-center justify-between p-2 rounded-lg flex">
                 <div className="flex items-center gap-2">
-                  <Home className="w-4 h-4 text-purple-600" />
+                  <MapIcon className="w-4 h-4 text-purple-600" />
                   <p className="font-medium text-xs text-gray-900">
                     Knowledge Space
                   </p>
@@ -209,7 +217,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                 <button 
                   className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 
                     ${ activeTab === 'skills' ? '' : ' hover:bg-gray-100' }
-                    ${ activeTab === 'skills' ? 'bg-violet-100 border border-gray-100 shadow-sm' : ''
+                    ${ activeTab === 'skills' ? 'bg-white border border-gray-200 shadow-sm' : ''
                   }`}
                   onClick={() => setActiveTab('skills')}
                 >
@@ -222,7 +230,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                 <button 
                   className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 
                     ${ activeTab === 'my' ? '' : 'hover:bg-gray-100 ' }
-                    ${activeTab === 'my' ? 'bg-violet-100 shadow-sm border border-gray-100' : ''
+                    ${activeTab === 'my' ? 'bg-white shadow-sm border border-gray-200' : ''
                   }`}
                   onClick={() => setActiveTab('my')}
                 >
@@ -250,7 +258,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                     <div className="flex flex-col gap-2 justify-center p-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <Triangle className="w-4 h-4 text-purple-600 fill-purple-600" />
+                          <ScanText className="w-4 h-4 text-purple-600 fill-purple-600" />
                           <p className="font-semibold text-sm text-purple-600">
                             Root Cause Analysis
                           </p>
@@ -266,7 +274,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                   {/* Gap to Plan */}
                   <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <Home className="w-4 h-4 text-gray-600" />
+                      < Goal className="w-4 h-4 text-gray-600" />
                       <p className="font-medium text-sm text-gray-500">
                         Gap to Plan
                       </p>
@@ -279,7 +287,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                   {/* Weekly Business Review */}
                   <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <List className="w-4 h-4 text-gray-600" />
+                      <Calendar className="w-4 h-4 text-gray-600" />
                       <p className="font-medium text-sm text-gray-500">
                         Weekly Business Review
                       </p>
@@ -291,7 +299,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                   {/* Phantom Inventory */}
                   <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <List className="w-4 h-4 text-gray-600" />
+                      <Package className="w-4 h-4 text-gray-600" />
                       <p className="font-medium text-sm text-gray-500">
                         Phantom Inventory
                       </p>
@@ -306,7 +314,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
               {activeTab === 'my' && (
                 <>
                   {/* Search Bar */}
-                  <div className="border border-gray-200 flex gap-2 items-center p-2 rounded-lg bg-white">
+                  <div className="border border-gray-200 flex gap-2 items-center p-2 rounded-lg">
                     <Search className="w-4 h-4 text-gray-700" />
                     <input
                       type="text"
@@ -400,20 +408,17 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
               
               {/* Navigation Icons */}
               <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-violet-200 transition-colors">
-                <Home className="w-4 h-4 text-purple-600" />
+                <Map className="w-4 h-4 text-purple-600" />
               </div>
               
               <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-violet-200 transition-colors">
-                <Triangle className="w-4 h-4 text-purple-600" />
+                <Zap className="w-4 h-4 text-purple-600" />
               </div>
               
               <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-violet-200 transition-colors">
-                <List className="w-4 h-4 text-purple-600" />
+                <ListTodo className="w-4 h-4 text-purple-600" />
               </div>
               
-              <div className="w-8 h-8 bg-violet-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-violet-200 transition-colors">
-                <ChevronDown className="w-4 h-4 text-purple-600" />
-              </div>
             </div>
           </div>
         )}

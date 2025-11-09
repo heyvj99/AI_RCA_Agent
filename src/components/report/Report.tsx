@@ -3,6 +3,7 @@ import { ExecutiveSummary } from './ExecutiveSummary';
 import { KeyFindings } from './KeyFindings';
 import { Recommendations } from './Recommendations';
 import { ChartSection } from './ChartSection';
+import { RecommendedTasks, type RecommendedTask } from './RecommendedTasks';
 import { Skeleton } from '../ui/skeleton';
 
 interface ReportProps {
@@ -23,6 +24,7 @@ interface ReportProps {
       url: string;
     };
   }[];
+  recommendedTasks?: RecommendedTask[];
   charts?: {
     title: string;
     content: React.ReactNode;
@@ -37,24 +39,25 @@ export function Report({
   executiveSummary,
   findings,
   recommendations,
+  recommendedTasks,
   charts = [],
   isStreaming = false,
 }: ReportProps) {
   return (
-    <div className="w-full h-full overflow-auto bg-gray-50 relative">
-      {/* Dotted background pattern */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-30"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #d1d5db 2px, transparent 2px)',
-          backgroundSize: '18px 18px',
-        }}
-      />
-      
-      <div className="relative z-10">
+    <div 
+      className="w-full h-full bg-gray-50 relative flex flex-col"
+      style={{
+        backgroundImage: 'radial-gradient(circle, slate-50/15% 0.25px, transparent 0.25px)',
+        backgroundSize: '18px 18px',
+        backgroundPosition: '0 0',
+      }}
+    >
+      <div className="relative z-10 flex-shrink-0 flex justify-center">
         <ReportHeader title={title} metadata={metadata} />
-        
-        <div className="p-4 space-y-4 max-w-[992px]">
+      </div>
+      
+      <div className="relative z-10 flex-1 overflow-auto flex justify-center">
+        <div className="p-4 space-y-4 max-w-[992px] w-full">
           {isStreaming ? (
             // Loading skeleton state
             <>
@@ -109,9 +112,11 @@ export function Report({
             <>
               <ExecutiveSummary content={executiveSummary} />
               
-              <KeyFindings findings={findings} />
+              {recommendedTasks && recommendedTasks.length > 0 && (
+                <RecommendedTasks tasks={recommendedTasks} />
+              )}
               
-              <Recommendations recommendations={recommendations} />
+              <KeyFindings findings={findings} />
               
               {charts.map((chart, index) => (
                 <ChartSection 
