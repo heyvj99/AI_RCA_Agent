@@ -329,13 +329,13 @@ export function RecommendedTasks({
                   </p>
                 </TableCell>
                 <TableCell className="w-[120px] p-2 border-r border-slate-200 whitespace-normal">
-                  <div className="flex items-center gap-0.5">
+                  <div className="flex justify-start items-center gap-0.5">
                     {getMetricIcon(task.metric.direction)}
                     <span className="text-sm text-slate-500">{task.metric.type}</span>
                   </div>
                 </TableCell>
                 <TableCell className="w-[120px] p-2 border-r border-slate-200 whitespace-normal">
-                  <div className="flex items-center gap-0.5 justify-center">
+                  <div className="flex justify-start items-center gap-0.5">
                     {getImpactIcon(task.impact)}
                     <span className={`text-sm font-medium ${getImpactColor(task.impact)}`}>
                       {task.impact}

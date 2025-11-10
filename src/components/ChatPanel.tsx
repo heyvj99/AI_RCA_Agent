@@ -506,17 +506,17 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                 <ChevronDown className="w-4 h-4 text-slate-600" />
               </div>
 
-              {/* Repeat Frequency */}
+              {/* Repeat Frequency
               <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <Plus className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.repeatFrequency}</span>
                 </div>
                 <ChevronDown className="w-4 h-4 text-slate-600" />
-              </div>
+              </div> */}
 
               {/* Mode Selection */}
-              <div className="bg-purple-200 rounded-md p-0.5 flex">
+              {/* <div className="bg-purple-200 rounded-md p-0.5 flex">
                 <button
                   type="button"
                   className={`flex-1 h-7 px-3 rounded flex items-center gap-1.5 ${
@@ -552,22 +552,22 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               </div>
 
               {/* Email Field */}
-              <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
+              {/* <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <Menu className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.emails}</span>
                 </div>
                 <ChevronDown className="w-4 h-4 text-slate-600" />
-              </div>
+              </div> */}
 
               {/* Channel Field */}
-              <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
+              {/* <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <Menu className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.channel}</span>
                 </div>
                 <ChevronDown className="w-4 h-4 text-slate-600" />
-              </div>
+              </div> */}
             </div>
           </div>
         )}
