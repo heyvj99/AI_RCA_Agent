@@ -142,7 +142,7 @@ function PromptInputTextarea({
       value={value}
       onChange={(e) => setValue(e.target.value)}
       onKeyDown={handleKeyDown}
-      placeholder="Ask Blake anything about Root Cause Analysis..."
+      placeholder="Ask anything about Root Cause Analysis..."
       className={cn(
         "text-slate-900 placeholder:text-[#697586] min-h-[44px] w-full resize-none border-none bg-transparent shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
         className

@@ -11,6 +11,7 @@ export interface TaskCardProps {
   completedAt?: string;
   pendingTasks?: number;
   highlighted?: boolean;
+  isNew?: boolean;
   className?: string;
 }
 
@@ -21,6 +22,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
   completedAt,
   pendingTasks,
   highlighted = false,
+  isNew = false,
   className = '',
 }) => {
   const [isTasksExpanded, setIsTasksExpanded] = useState(false);
@@ -53,11 +55,24 @@ const TaskCard: React.FC<TaskCardProps> = ({
   return (
     <div className={`${bgColor} border rounded-lg ${borderColor} ${className}`}>
       <div className="flex flex-col gap-3 p-3">
-        {/* Tag */}
-        <div className="flex items-start">
-          <div className="bg-slate-50 border border-slate-200 rounded-md px-2 py-0.5">
-            <p className="font-normal text-xs text-slate-500">{tag}</p>
+        {/* Tag and New Chip */}
+        <div className="flex flex-row items-center justify-between">
+          {/* Tag */}
+          <div className="flex items-start">
+            <div className="bg-slate-50 border border-slate-200 rounded-md px-2 py-0.5">
+              <p className="font-normal text-xs text-slate-500">{tag}</p>
+            </div>
           </div>
+
+          {/* New Chip */}
+          {isNew && (
+            <div className="flex items-start">
+              <div className="bg-white rounded-md px-2 py-0.5 flex items-center gap-1">
+                <Circle className="w-2 h-2 text-green-700 fill-green-700" />
+                <p className="font-normal text-xs text-green-700">New</p>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Main Text */}

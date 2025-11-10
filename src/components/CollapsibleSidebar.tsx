@@ -75,6 +75,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
       ...task,
       id: `task-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       status: 'in-progress',
+      isNew: true,
     };
     setInProgressTasks(prev => [newTask, ...prev]);
     onTaskAdded?.(newTask.id);
@@ -345,6 +346,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                               mainText={task.mainText}
                               question={task.question}
                               status={task.status}
+                              isNew={task.isNew}
                             />
                           ))}
                         </>
@@ -381,6 +383,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                             completedAt={task.completedAt}
                             pendingTasks={task.pendingTasks}
                             highlighted={task.highlighted}
+                            isNew={task.isNew}
                           />
                         ))}
                       </div>
