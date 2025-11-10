@@ -31,8 +31,8 @@ export function SystemMessage({
   const baseClasses = "flex flex-col gap-2.5 p-3 rounded-xl text-sm font-medium"
   
   const variantClasses = {
-    default: "bg-[#fbfaff] text-[#364152] border border-violet-200",
-    action: "bg-[#fbfaff] text-[#364152] border border-violet-200",
+    default: "bg-[#fbfaff] text-[#364152] border border-purple-200",
+    action: "bg-[#fbfaff] text-[#364152] border border-purple-200",
     warning: "bg-yellow-50 text-yellow-900 border border-yellow-200",
     error: "bg-red-50 text-red-900 border border-red-200"
   }

@@ -175,15 +175,15 @@ export function RecommendedTasks({
             </div>
             <Progress 
               value={40} 
-              className="bg-violet-50 border border-violet-400 h-1.5"
-              indicatorClassName="bg-violet-600"
+              className="bg-purple-50 border border-purple-400 h-1.5"
+              indicatorClassName="bg-purple-600"
             />
           </div>
 
           {/* Insight Box - 50% width */}
-          <div className="bg-white border violet-100 rounded-sm p-2 w-1/2">
+          <div className="bg-white border-purple-100 rounded-sm p-2 w-1/2">
             <div className="flex gap-2.5 items-start">
-              <Sparkles className="w-4 h-4 text-violet-400 flex-shrink-0 mt-0.5" />
+              <Sparkles className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
               <p className="text-sm text-slate-500 leading-5">{insight}</p>
             </div>
           </div>
@@ -194,7 +194,7 @@ export function RecommendedTasks({
           {summaryCards.map((card, index) => (
             <div
               key={index}
-              className="flex-1 bg-gradient-to-b from-violet-50 to-white border border-violet-200 rounded-sm p-2 flex flex-col justify-between min-h-[80px]"
+              className="flex-1 bg-gradient-to-b from-purple-50 to-white border border-purple-200 rounded-sm p-2 flex flex-col justify-between min-h-[80px]"
             >
               <p className="text-lg font-medium text-slate-600">{card.value}</p>
               <p className="text-sm text-slate-500">
@@ -219,7 +219,7 @@ export function RecommendedTasks({
           <div className="bg-slate-50 border border-slate-200 rounded-sm p-3 pb-8 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <CheckSquare className="w-4 h-4 text-violet-600" />
+                <CheckSquare className="w-4 h-4 text-purple-600" />
                 <span className="text-sm font-medium text-slate-900">
                   {selectedTasks.size} {selectedTasks.size === 1 ? 'task' : 'tasks'} selected
                 </span>
@@ -270,12 +270,12 @@ export function RecommendedTasks({
         <div className={`border border-slate-200 rounded-sm overflow-hidden ${selectedTasks.size > 0 ? '-mt-4' : ''}`}>
         <Table>
           <TableHeader>
-            <TableRow className="bg-violet-50 border-b border-slate-200 hover:bg-violet-50 [&>th]:border-0">
+            <TableRow className="bg-purple-50 border-b border-slate-200 hover:bg-purple-50 [&>th]:border-0">
               <TableHead className="w-10 p-2 border-r border-slate-200">
                 <div className="flex items-center justify-center">
                   <input
                     type="checkbox"
-                    className="w-4 h-4 rounded border-slate-300 text-violet-600 focus:ring-violet-500"
+                    className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
                     checked={selectedTasks.size === tasks.length && tasks.length > 0}
                     onChange={(e) => {
                       if (e.target.checked) {
@@ -311,7 +311,7 @@ export function RecommendedTasks({
                   <div className="flex items-center justify-center">
                     <input
                       type="checkbox"
-                      className="w-4 h-4 rounded border-slate-300 text-violet-600 focus:ring-violet-500"
+                      className="w-4 h-4 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
                       checked={selectedTasks.has(task.id)}
                       onChange={() => toggleTaskSelection(task.id)}
                     />

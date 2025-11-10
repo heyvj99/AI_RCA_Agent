@@ -360,7 +360,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
   // Removed unused handleNewTaskSubmit to satisfy linter
 
   return (
-    <div className={`bg-violet-50 border-l border-[#e3e8ef] h-full flex flex-col ${className}`}>
+    <div className={`bg-purple-50 border-l border-[#e3e8ef] h-full flex flex-col ${className}`}>
       {/* Header */}
       <div className="bg-white border-b border-[#e3e8ef] h-16 flex items-center justify-between px-4 shrink-0">
         <div className="flex items-center gap-2">
@@ -381,7 +381,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
       {/* Chat Body */}
       <div className="flex flex-col flex-1 justify-between p-3 min-h-0">
         {/* Messages */}
-        <ChatContainerRoot key={messageHistory.length} className="flex-1 p-1">
+        <ChatContainerRoot key={messageHistory.length} className="flex-1 p-0">
           <ChatContainerContent className="flex flex-col gap-2">
             {messageHistory.map((message, index) => (
               <div key={index} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -478,7 +478,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
             {/* Form Fields */}
             <div className="space-y-3">
               {/* Category Dropdown */}
-              <div className="bg-white border border-violet-200 rounded-md h-8 flex items-center justify-between px-3">
+              <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <Menu className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.category}</span>
@@ -487,7 +487,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               </div>
 
               {/* Date Range */}
-              <div className="bg-white border border-violet-200 rounded-md h-8 flex items-center justify-between px-3">
+              <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.dateRange}</span>
@@ -496,7 +496,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               </div>
 
               {/* Comparison Range */}
-              <div className="bg-white border border-violet-200 rounded-md h-8 flex items-center justify-between px-3">
+              <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 flex items-center justify-center">
                     <span className="text-xs text-[#697586]">vs.</span>
@@ -507,7 +507,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               </div>
 
               {/* Repeat Frequency */}
-              <div className="bg-white border border-violet-200 rounded-md h-8 flex items-center justify-between px-3">
+              <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <Plus className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.repeatFrequency}</span>
@@ -516,7 +516,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               </div>
 
               {/* Mode Selection */}
-              <div className="bg-violet-200 rounded-md p-0.5 flex">
+              <div className="bg-purple-200 rounded-md p-0.5 flex">
                 <button
                   type="button"
                   className={`flex-1 h-7 px-3 rounded flex items-center gap-1.5 ${
@@ -552,7 +552,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               </div>
 
               {/* Email Field */}
-              <div className="bg-white border border-violet-200 rounded-md h-8 flex items-center justify-between px-3">
+              <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <Menu className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.emails}</span>
@@ -561,7 +561,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               </div>
 
               {/* Channel Field */}
-              <div className="bg-white border border-violet-200 rounded-md h-8 flex items-center justify-between px-3">
+              <div className="bg-white border border-purple-200 rounded-md h-8 flex items-center justify-between px-3">
                 <div className="flex items-center gap-2">
                   <Menu className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.channel}</span>
@@ -585,7 +585,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               <button
                 type="button"
                 onClick={() => setIsNewTaskModalOpen(!isNewTaskModalOpen)}
-                className="bg-white border border-violet-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-slate-50 transition-colors"
+                className="bg-white border border-purple-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-slate-50 transition-colors"
               >
                 <SlidersHorizontal className="w-4 h-4 text-[#6927da]" />
                 <span className="text-[#6927da] text-xs font-semibold">Config</span>

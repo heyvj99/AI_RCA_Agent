@@ -41,7 +41,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
   ];
 
   const borderColor = highlighted 
-    ? 'border-violet-300' 
+    ? 'border-purple-300' 
     : status === 'in-progress' 
     ? 'border-slate-200' 
     : 'border-slate-300';
