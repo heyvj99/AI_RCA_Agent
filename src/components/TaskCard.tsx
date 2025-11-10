@@ -28,18 +28,16 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
   // Dummy tasks data
   const dummyTasks = [
-    'Review Content for 16 SKUs',
-    '4 saved items pending action',
-    'Task 3',
-    'Task 4',
+    'Shift ad spend to 4 top performers',
+    'Pause 1 underperforming ad campaign',
   ];
 
   // Dummy completed tasks data
   const dummyCompletedTasks = [
-    'Review Content for 16 SKUs',
-    '4 saved items pending action',
-    'Task 1',
-    'Task 2',
+    'Shift ad spend to 4 top performers',
+    'Restock 2 high-demand out-of-stock SKUs',
+    'Increase discounts on 6 slow movers',
+    'Pause 1 underperforming ad campaign',
   ];
 
   const borderColor = highlighted 

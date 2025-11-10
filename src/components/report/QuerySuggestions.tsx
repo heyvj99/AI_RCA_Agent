@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { Card } from '../ui/card';
-import { TrendingUp, BarChart3, DollarSign, ShoppingCart, Zap } from 'lucide-react';
+import { TrendingUp, BarChart3, DollarSign, ShoppingCart, Zap, Timer, TimerIcon, History } from 'lucide-react';
 
 interface QuerySuggestion {
   id: string;
   query: string;
   icon?: React.ReactNode;
-  source?: string;
-  isTemplate?: boolean;
+  iconBgColor: string;
+  skill: 'Weekly Business Review' | 'Root Cause Analysis' | 'Gap to Plan' | 'Phantom Inventory Analysis';
 }
 
 interface QuerySuggestionsProps {
@@ -21,25 +21,29 @@ const suggestions: QuerySuggestion[] = [
     id: '1',
     query: "Analyze sales performance by product category for Q3 2024. Show revenue trends, top performers, and identify underperforming categories.",
     icon: <BarChart3 className="w-5 h-5 text-blue-600" />,
-    source: "Sales Dashboard Q3 2024"
+    iconBgColor: 'bg-blue-100',
+    skill: 'Weekly Business Review'
   },
   {
     id: '2',
     query: "What's the ROI of our marketing campaigns this month? Break down by channel (Google Ads, Facebook, Email) and show cost per acquisition.",
     icon: <DollarSign className="w-5 h-5 text-green-600" />,
-    isTemplate: true
+    iconBgColor: 'bg-green-100',
+    skill: 'Root Cause Analysis'
   },
   {
     id: '3',
     query: "Identify products with high cart abandonment rates and suggest pricing or promotion strategies to improve conversion.",
     icon: <ShoppingCart className="w-5 h-5 text-purple-600" />,
-    isTemplate: true
+    iconBgColor: 'bg-purple-100',
+    skill: 'Gap to Plan'
   },
   {
     id: '4',
     query: "Compare this month's sales to last month. Highlight key drivers of change and recommend actions to optimize performance.",
     icon: <TrendingUp className="w-5 h-5 text-orange-600" />,
-    isTemplate: true
+    iconBgColor: 'bg-orange-100',
+    skill: 'Phantom Inventory Analysis'
   }
 ];
 
@@ -54,20 +58,17 @@ export function QuerySuggestions({ onQuerySelect }: QuerySuggestionsProps) {
     <div className="w-full max-w-[992px] mx-auto px-4 py-8">
       {/* Welcome Message */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Hello, Sales Analyst</h1>
-        <p className="text-lg text-gray-600">How can I help you analyze your ecommerce performance today?</p>
+        <h1 className="text-xl font-bold text-gray-900 mb-2">Hello, VJ</h1>
+        <p className="text-md text-gray-600">What would you like to explore today?</p>
       </div>
 
       {/* Suggested Actions */}
       <div className="mb-8 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg text-sm font-medium transition-colors border border-green-200">
+        <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-200">
           Connect your data source
         </button>
         <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-200">
           Upload sales report
-        </button>
-        <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-200">
-          Ask your first question
         </button>
         <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-200">
           Use a template
@@ -76,8 +77,8 @@ export function QuerySuggestions({ onQuerySelect }: QuerySuggestionsProps) {
 
       {/* Query Suggestion Cards */}
       <div className="mb-4 flex items-center gap-2">
-        <Zap className="w-4 h-4 text-gray-500" />
-        <h2 className="text-sm font-semibold text-gray-700">Suggested</h2>
+        <History className="w-4 h-4 text-gray-500" />
+        <h2 className="text-sm font-semibold text-gray-700">Recents</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -89,7 +90,7 @@ export function QuerySuggestions({ onQuerySelect }: QuerySuggestionsProps) {
           >
             <div className="flex flex-col h-full">
               {suggestion.icon && (
-                <div className="mb-3">
+                <div className={`mb-3 w-10 h-10 rounded-lg ${suggestion.iconBgColor} flex items-center justify-center`}>
                   {suggestion.icon}
                 </div>
               )}
@@ -97,11 +98,9 @@ export function QuerySuggestions({ onQuerySelect }: QuerySuggestionsProps) {
                 {suggestion.query}
               </p>
               <div className="mt-auto pt-3 border-t border-gray-100">
-                {suggestion.isTemplate ? (
-                  <span className="text-xs text-gray-500">Use template</span>
-                ) : (
-                  <span className="text-xs text-gray-500">{suggestion.source}</span>
-                )}
+                <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+                  {suggestion.skill}
+                </span>
               </div>
             </div>
           </Card>
