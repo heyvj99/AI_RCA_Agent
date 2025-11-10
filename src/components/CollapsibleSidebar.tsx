@@ -162,22 +162,22 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                   </div>
                 </div>
                 <div className="flex flex-col gap-0.5">
-                  <div className="font-medium text-base text-gray-900">
+                  <div className="font-medium text-base text-slate-900">
                     Blake
                   </div>
-                  <div className="font-medium text-xs text-gray-700">
+                  <div className="font-medium text-xs text-slate-700">
                     Sales Analyst
                   </div>
                 </div>
               </div>
               <div className="flex items-center justify-center p-2">
-                <ChevronDown className="w-4 h-4 text-gray-500" />
+                <ChevronDown className="w-4 h-4 text-slate-500" />
               </div>
             </div>
 
             {/* Agent Description Container */}
             <div className="border-b border-violet-200 flex flex-col gap-3 pb-4 px-4 shrink-0">
-              <div className="font-normal text-sm text-gray-500 leading-5">
+              <div className="font-normal text-sm text-slate-500 leading-5">
                 <p className="mb-0">Specialized in identifying root causes of sales performance gaps and providing actionable insights.</p>
               </div>
               
@@ -185,7 +185,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
               <div className="bg-violet-50 border border-violet-200 h-8 items-center justify-between p-2 rounded-lg flex">
                 <div className="flex items-center gap-2">
                   <MapIcon className="w-4 h-4 text-purple-600" />
-                  <p className="font-medium text-xs text-gray-900">
+                  <p className="font-medium text-xs text-slate-900">
                     Knowledge Space
                   </p>
                 </div>
@@ -197,48 +197,48 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
               {/* Stats Container */}
               <div className="flex gap-3">
                 <div className="bg-violet-100 flex flex-col justify-between h-12 p-2 rounded-lg flex-1">
-                  <p className="font-medium text-sm text-gray-900">100</p>
-                  <p className="font-normal text-xs text-gray-500">Tasks Completed</p>
+                  <p className="font-medium text-sm text-slate-900">100</p>
+                  <p className="font-normal text-xs text-slate-500">Tasks Completed</p>
                 </div>
                 <div className="bg-violet-100 flex flex-col justify-between h-12 p-2 rounded-lg flex-1">
-                  <p className="font-medium text-sm text-gray-900">345</p>
-                  <p className="font-normal text-xs text-gray-500">Hours Saved</p>
+                  <p className="font-medium text-sm text-slate-900">345</p>
+                  <p className="font-normal text-xs text-slate-500">Hours Saved</p>
                 </div>
               </div>
             </div>
 
             {/* Tabs Container */}
             <div className="flex flex-col gap-4 p-4 shrink-0">
-              <div className="bg-gray-50 p-1 border border-gray-200 flex gap-0.5 items-center rounded-lg">
+              <div className="bg-slate-50 p-1 border border-slate-200 flex gap-0.5 items-center rounded-lg">
                 <button 
                   className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 
-                    ${ activeTab === 'skills' ? '' : ' hover:bg-gray-100' }
-                    ${ activeTab === 'skills' ? 'bg-white border border-gray-200 shadow-sm' : ''
+                    ${ activeTab === 'skills' ? '' : ' hover:bg-slate-100' }
+                    ${ activeTab === 'skills' ? 'bg-white border border-slate-200 shadow-sm' : ''
                   }`}
                   onClick={() => setActiveTab('skills')}
                 >
                   <p className={`text-xs whitespace-nowrap ${
-                    activeTab === 'skills' ? 'font-semibold text-gray-900' : 'font-medium text-gray-500'
+                    activeTab === 'skills' ? 'font-semibold text-slate-900' : 'font-medium text-slate-500'
                   }`}>
                     Skills
                   </p>
                 </button>
                 <button 
                   className={`flex-1 h-9 rounded-lg flex items-center justify-center px-2 py-2 transition-all duration-200 
-                    ${ activeTab === 'my' ? '' : 'hover:bg-gray-100 ' }
-                    ${activeTab === 'my' ? 'bg-white shadow-sm border border-gray-200' : ''
+                    ${ activeTab === 'my' ? '' : 'hover:bg-slate-100 ' }
+                    ${activeTab === 'my' ? 'bg-white shadow-sm border border-slate-200' : ''
                   }`}
                   onClick={() => setActiveTab('my')}
                 >
                   <p className={`text-xs whitespace-nowrap ${
-                    activeTab === 'my' ? 'font-semibold text-gray-900' : 'font-medium text-gray-500'
+                    activeTab === 'my' ? 'font-semibold text-slate-900' : 'font-medium text-slate-500'
                   }`}>
                     Tasks
                   </p>
                   <div className={`px-1.5 py-0.5 rounded-full ml-1.5 ${
-                    activeTab === 'my' ? 'bg-violet-200 border border-violet-300' : 'bg-white border border-gray-200'
+                    activeTab === 'my' ? 'bg-violet-200 border border-violet-300' : 'bg-white border border-slate-200'
                   }`}>
-                    <p className="font-medium text-xs text-gray-900 text-center">{inProgressTasks.length + completedTasks.length}</p>
+                    <p className="font-medium text-xs text-slate-900 text-center">{inProgressTasks.length + completedTasks.length}</p>
                   </div>
                 </button>
               </div>
@@ -261,46 +261,46 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                         </div>
                         <p className="font-medium text-sm text-purple-600">→</p>
                       </div>
-                      <p className="font-normal text-xs text-gray-500">
+                      <p className="font-normal text-xs text-slate-500">
                       Uncover key drivers of performance shifts across time, products, and channels.
                       </p>
                     </div>
                   </div>
 
                   {/* Gap to Plan */}
-                  <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
+                  <div className="border border-slate-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      < Goal className="w-4 h-4 text-gray-600" />
-                      <p className="font-medium text-sm text-gray-500">
+                      < Goal className="w-4 h-4 text-slate-600" />
+                      <p className="font-medium text-sm text-slate-500">
                         Gap to Plan
                       </p>
                     </div>
-                    <p className="font-normal text-xs text-gray-500">
+                    <p className="font-normal text-xs text-slate-500">
                     Track weekly variances to targets and pinpoint performance drivers to take corrective action.
                     </p>
                   </div>
 
                   {/* Weekly Business Review */}
-                  <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
+                  <div className="border border-slate-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-gray-600" />
-                      <p className="font-medium text-sm text-gray-500">
+                      <Calendar className="w-4 h-4 text-slate-600" />
+                      <p className="font-medium text-sm text-slate-500">
                         Weekly Business Review
                       </p>
                     </div>
-                    <p className="font-normal text-xs text-gray-500">
+                    <p className="font-normal text-xs text-slate-500">
                     Auto-compile KPIs, highlights, and risks with week-over-week trends.                    </p>
                   </div>
 
                   {/* Phantom Inventory */}
-                  <div className="border border-gray-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
+                  <div className="border border-slate-200 flex flex-col gap-2 justify-center p-3 rounded-lg">
                     <div className="flex items-center gap-2">
-                      <Package className="w-4 h-4 text-gray-600" />
-                      <p className="font-medium text-sm text-gray-500">
+                      <Package className="w-4 h-4 text-slate-600" />
+                      <p className="font-medium text-sm text-slate-500">
                         Phantom Inventory
                       </p>
                     </div>
-                    <p className="font-normal text-xs text-gray-500">
+                    <p className="font-normal text-xs text-slate-500">
                     Spot stock mismatches causing phantom inventory and sales loss.
                     </p>
                   </div>
@@ -310,12 +310,12 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
               {activeTab === 'my' && (
                 <>
                   {/* Search Bar */}
-                  <div className="border border-gray-200 flex gap-2 items-center p-2 rounded-lg">
-                    <Search className="w-4 h-4 text-gray-700" />
+                  <div className="border border-slate-200 flex gap-2 items-center p-2 rounded-lg">
+                    <Search className="w-4 h-4 text-slate-700" />
                     <input
                       type="text"
                       placeholder="Search for tasks"
-                      className="flex-1 bg-transparent border-none outline-none font-normal text-xs text-gray-500 placeholder:text-gray-500"
+                      className="flex-1 bg-transparent border-none outline-none font-normal text-xs text-slate-500 placeholder:text-slate-500"
                     />
                   </div>
 
@@ -327,11 +327,11 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                         className="flex items-center justify-between"
                       >
                         <div className="flex gap-1.5 items-center">
-                          <List className="w-4 h-4 text-gray-700" />
-                          <p className="font-semibold text-xs text-gray-700">In Progress ({inProgressTasks.length})</p>
+                          <List className="w-4 h-4 text-slate-700" />
+                          <p className="font-semibold text-xs text-slate-700">In Progress ({inProgressTasks.length})</p>
                         </div>
                         <ChevronDown
-                          className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                          className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
                             isInProgressOpen ? '' : '-rotate-90'
                           }`}
                         />
@@ -360,11 +360,11 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
                       className="flex items-center justify-between"
                     >
                       <div className="flex gap-1.5 items-center">
-                        <Check className="w-4 h-4 text-gray-700" />
-                        <p className="font-semibold text-xs text-gray-700">Completed ({completedTasks.length})</p>
+                        <Check className="w-4 h-4 text-slate-700" />
+                        <p className="font-semibold text-xs text-slate-700">Completed ({completedTasks.length})</p>
                       </div>
                       <ChevronDown
-                        className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                        className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
                           isCompletedOpen ? '' : '-rotate-90'
                         }`}
                       />
@@ -423,7 +423,7 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
       {/* Toggle Button Overlay */}
       <button
         onClick={toggleSidebar}
-        className={`absolute top-4 right-4 bg-white shadow-lg hover:shadow-xl transition-all duration-200 p-2 rounded-full border border-gray-200 hover:border-gray-300 z-10 ${
+        className={`absolute top-4 right-4 bg-white shadow-lg hover:shadow-xl transition-all duration-200 p-2 rounded-full border border-slate-200 hover:border-slate-300 z-10 ${
           isOpen ? 'transform translate-x-0' : 'transform translate-x-8'
         }`}
         style={{ width: '40px', height: '40px' }}
@@ -432,9 +432,9 @@ const CollapsibleSidebar = forwardRef<CollapsibleSidebarRef, CollapsibleSidebarP
           isOpen ? 'rotate-0' : 'rotate-180'
         }`}>
           {isOpen ? (
-            <ChevronLeft className="w-4 h-4 text-gray-500" />
+            <ChevronLeft className="w-4 h-4 text-slate-500" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-gray-500" />
+            <ChevronRight className="w-4 h-4 text-slate-500" />
           )}
         </div>
       </button>

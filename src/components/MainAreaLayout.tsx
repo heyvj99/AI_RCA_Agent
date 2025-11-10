@@ -173,7 +173,7 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-80px)] bg-gray-50">
+    <div className="flex h-[calc(100vh-80px)] bg-slate-50">
       {/* Left Panel - Collapsible Sidebar */}
       <CollapsibleSidebar ref={sidebarRef}/>
 
@@ -189,7 +189,7 @@ const MainAreaLayout: React.FC<MainAreaLayoutProps> = ({ children }) => {
       </div>
 
       {/* Right Panel - Chat */}
-      <div className="w-96 p-0 border-l border-gray-200">
+      <div className="w-96 p-0 border-l border-slate-200">
         <ChatPanel 
           onStreamingChange={setIsStreaming}
           onNewQuery={handleNewQuery}

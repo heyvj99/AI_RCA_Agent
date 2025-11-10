@@ -41,47 +41,47 @@ export function Loader({
     switch (variant) {
       case "circular":
         return (
-          <div className={cn("animate-spin rounded-full border-2 border-gray-300 border-t-gray-600", sizeClasses[size], className)} />
+          <div className={cn("animate-spin rounded-full border-2 border-slate-300 border-t-slate-600", sizeClasses[size], className)} />
         )
       
       case "classic":
         return (
           <div className={cn("flex space-x-1", className)}>
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+            <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+            <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+            <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
           </div>
         )
       
       case "pulse":
         return (
-          <div className={cn("animate-pulse bg-gray-300 rounded", sizeClasses[size], className)} />
+          <div className={cn("animate-pulse bg-slate-300 rounded", sizeClasses[size], className)} />
         )
       
       case "pulse-dot":
         return (
           <div className={cn("flex items-center space-x-1", className)}>
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" />
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: "200ms" }} />
-            <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{ animationDelay: "400ms" }} />
+            <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse" />
+            <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse" style={{ animationDelay: "200ms" }} />
+            <div className="w-2 h-2 bg-slate-400 rounded-full animate-pulse" style={{ animationDelay: "400ms" }} />
           </div>
         )
       
       case "dots":
         return (
           <div className={cn("flex space-x-1", className)}>
-            <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-            <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "100ms" }} />
-            <div className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "200ms" }} />
+            <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+            <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "100ms" }} />
+            <div className="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "200ms" }} />
           </div>
         )
       
       case "typing":
         return (
           <div className={cn("flex space-x-1", className)}>
-            <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-            <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-            <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+            <div className="w-1 h-1 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+            <div className="w-1 h-1 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+            <div className="w-1 h-1 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
           </div>
         )
       
@@ -91,7 +91,7 @@ export function Loader({
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
-                className="w-1 bg-gray-500 rounded-full animate-pulse"
+                className="w-1 bg-slate-500 rounded-full animate-pulse"
                 style={{
                   height: `${8 + i * 2}px`,
                   animationDelay: `${i * 100}ms`,
@@ -108,7 +108,7 @@ export function Loader({
             {[...Array(4)].map((_, i) => (
               <div
                 key={i}
-                className="w-1 bg-gray-500 rounded-full animate-pulse"
+                className="w-1 bg-slate-500 rounded-full animate-pulse"
                 style={{
                   height: "12px",
                   animationDelay: `${i * 100}ms`,
@@ -129,14 +129,14 @@ export function Loader({
       
       case "text-blink":
         return (
-          <span className={cn("animate-pulse text-gray-500", textSizeClasses[size], className)}>
+          <span className={cn("animate-pulse text-slate-500", textSizeClasses[size], className)}>
             Processing...
           </span>
         )
       
       case "text-shimmer":
         return (
-          <span className={cn("animate-pulse bg-gradient-to-r from-gray-300 to-gray-500 bg-clip-text text-transparent", textSizeClasses[size], className)}>
+          <span className={cn("animate-pulse bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent", textSizeClasses[size], className)}>
             Processing...
           </span>
         )
@@ -144,18 +144,18 @@ export function Loader({
       case "loading-dots":
         return (
           <div className={cn("flex items-center space-x-1", className)}>
-            <span className={cn("text-gray-500", textSizeClasses[size])}>Loading</span>
+            <span className={cn("text-slate-500", textSizeClasses[size])}>Loading</span>
             <div className="flex space-x-0.5">
-              <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-              <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-              <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+              <div className="w-1 h-1 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+              <div className="w-1 h-1 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+              <div className="w-1 h-1 bg-slate-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
             </div>
           </div>
         )
       
       default:
         return (
-          <div className={cn("animate-spin rounded-full border-2 border-gray-300 border-t-gray-600", sizeClasses[size], className)} />
+          <div className={cn("animate-spin rounded-full border-2 border-slate-300 border-t-slate-600", sizeClasses[size], className)} />
         )
     }
   }

@@ -64,7 +64,7 @@ export function ReasoningTrigger({ children, className, ...props }: ReasoningTri
     <button
       onClick={() => setIsOpen(!isOpen)}
       className={cn(
-        "flex items-center gap-2 text-xs text-gray-500 hover:text-gray-700 transition-colors",
+        "flex items-center gap-2 text-xs text-slate-500 hover:text-slate-700 transition-colors",
         className
       )}
       {...props}
@@ -105,9 +105,9 @@ export function ReasoningContent({
   return (
     <div className={cn("mt-2", className)} {...props}>
       {markdown ? (
-        <Markdown className={cn("text-xs text-gray-500 prose-sm prose-gray", contentClassName)}>{children as string}</Markdown>
+        <Markdown className={cn("text-xs text-slate-500 prose-sm prose-slate", contentClassName)}>{children as string}</Markdown>
       ) : (
-        <div className={cn("text-xs text-gray-500", contentClassName)}>{children}</div>
+        <div className={cn("text-xs text-slate-500", contentClassName)}>{children}</div>
       )}
     </div>
   )

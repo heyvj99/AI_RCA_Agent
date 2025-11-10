@@ -44,7 +44,7 @@ const getImpactColor = (impact: ImpactLevel): string => {
     case 'Low':
       return 'text-yellow-500';
     default:
-      return 'text-gray-600';
+      return 'text-slate-600';
   }
 };
 
@@ -144,16 +144,16 @@ export function RecommendedTasks({
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg border border-gray-200">
+    <div className="bg-white p-4 rounded-lg border border-slate-200">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-base font-medium text-gray-900">Recommended Tasks</h2>
+        <h2 className="text-base font-medium text-slate-900">Recommended Tasks</h2>
         <div className="flex items-center gap-1">
-          <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded">
-            <MessageCircle className="w-5 h-5 text-gray-500" />
+          <button className="w-8 h-8 flex items-center justify-center hover:bg-slate-100 rounded">
+            <MessageCircle className="w-5 h-5 text-slate-500" />
           </button>
-          <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded">
-            <MoreVertical className="w-5 h-5 text-gray-500" />
+          <button className="w-8 h-8 flex items-center justify-center hover:bg-slate-100 rounded">
+            <MoreVertical className="w-5 h-5 text-slate-500" />
           </button>
         </div>
       </div>
@@ -196,7 +196,7 @@ export function RecommendedTasks({
               key={index}
               className="flex-1 bg-gradient-to-b from-violet-50 to-white border border-violet-200 rounded-sm p-2 flex flex-col justify-between min-h-[80px]"
             >
-              <p className="text-lg font-medium text-gray-600">{card.value}</p>
+              <p className="text-lg font-medium text-slate-600">{card.value}</p>
               <p className="text-sm text-slate-500">
                 {card.label.split(card.boldText || '').map((part, i) => (
                   <span key={i}>
@@ -216,17 +216,17 @@ export function RecommendedTasks({
       <div>
         {/* Action Bar - appears when rows are selected */}
         {selectedTasks.size > 0 && (
-          <div className="bg-gray-50 border border-gray-200 rounded-sm p-3 pb-8 flex items-center justify-between">
+          <div className="bg-slate-50 border border-slate-200 rounded-sm p-3 pb-8 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <CheckSquare className="w-4 h-4 text-violet-600" />
-                <span className="text-sm font-medium text-gray-900">
+                <span className="text-sm font-medium text-slate-900">
                   {selectedTasks.size} {selectedTasks.size === 1 ? 'task' : 'tasks'} selected
                 </span>
               </div>
               <button
                 onClick={clearSelection}
-                className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1"
+                className="text-sm text-slate-600 hover:text-slate-900 flex items-center gap-1"
               >
                 <X className="w-4 h-4" />
                 Clear selection
@@ -236,7 +236,7 @@ export function RecommendedTasks({
               {/* <Button
                 variant="outline"
                 size="sm"
-                className="h-8 border-gray-200 text-xs font-medium"
+                className="h-8 border-slate-200 text-xs font-medium"
                 onClick={() => handleBulkAction('Take Action')}
               >
                 <TrendingUp className="w-3 h-3 mr-1.5" />
@@ -246,7 +246,7 @@ export function RecommendedTasks({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-8 border-gray-200 text-xs font-medium flex items-center gap-1"
+                  className="h-8 border-slate-200 text-xs font-medium flex items-center gap-1"
                   onClick={() => handleBulkAction('Assign to')}
                 >
                   <UserPlus className="w-3 h-3 mr-1.5" />
@@ -257,10 +257,10 @@ export function RecommendedTasks({
               <Button
                 variant="outline"
                 size="icon"
-                className="h-8 w-8 border-gray-200"
+                className="h-8 w-8 border-slate-200"
                 onClick={() => handleBulkAction('Export')}
               >
-                <Share className="w-4 h-4 text-gray-500" />
+                <Share className="w-4 h-4 text-slate-500" />
               </Button>
             </div>
           </div>
@@ -275,7 +275,7 @@ export function RecommendedTasks({
                 <div className="flex items-center justify-center">
                   <input
                     type="checkbox"
-                    className="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500"
+                    className="w-4 h-4 rounded border-slate-300 text-violet-600 focus:ring-violet-500"
                     checked={selectedTasks.size === tasks.length && tasks.length > 0}
                     onChange={(e) => {
                       if (e.target.checked) {
@@ -288,30 +288,30 @@ export function RecommendedTasks({
                 </div>
               </TableHead>
               <TableHead className="w-[326px] p-2 border-r border-slate-200">
-                <p className="text-sm font-medium text-gray-900">Recommended Tasks</p>
+                <p className="text-sm font-medium text-slate-900">Recommended Tasks</p>
               </TableHead>
               <TableHead className="w-[120px] p-2 border-r border-slate-200">
-                <p className="text-sm font-medium text-gray-900">No. of SKUs</p>
+                <p className="text-sm font-medium text-slate-900">No. of SKUs</p>
               </TableHead>
               <TableHead className="w-[120px] p-2 border-r border-slate-200">
-                <p className="text-sm font-medium text-gray-900">Metrics</p>
+                <p className="text-sm font-medium text-slate-900">Metrics</p>
               </TableHead>
               <TableHead className="w-[120px] p-2 border-r border-slate-200">
-                <p className="text-sm font-medium text-gray-900">Impact</p>
+                <p className="text-sm font-medium text-slate-900">Impact</p>
               </TableHead>
               <TableHead className="flex-1 p-2">
-                <p className="text-sm font-medium text-gray-900">Actions</p>
+                <p className="text-sm font-medium text-slate-900">Actions</p>
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {tasks.map((task) => (
-              <TableRow key={task.id} className="group bg-white hover:bg-gray-50 transition-colors border-b border-slate-200 [&>td]:border-0">
+              <TableRow key={task.id} className="group bg-white hover:bg-slate-50 transition-colors border-b border-slate-200 [&>td]:border-0">
                 <TableCell className="w-10 p-2 border-r border-slate-200 whitespace-normal">
                   <div className="flex items-center justify-center">
                     <input
                       type="checkbox"
-                      className="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500"
+                      className="w-4 h-4 rounded border-slate-300 text-violet-600 focus:ring-violet-500"
                       checked={selectedTasks.has(task.id)}
                       onChange={() => toggleTaskSelection(task.id)}
                     />
@@ -319,7 +319,7 @@ export function RecommendedTasks({
                 </TableCell>
                 <TableCell className="w-[326px] p-2 border-r border-slate-200 min-h-[87px] whitespace-normal">
                   <div className="flex flex-col justify-center gap-2">
-                    <p className="text-sm font-medium text-gray-900">{task.title}</p>
+                    <p className="text-sm font-medium text-slate-900">{task.title}</p>
                     <p className="text-sm text-slate-500 leading-5 line-clamp-2">{task.description}</p>
                   </div>
                 </TableCell>
@@ -348,7 +348,7 @@ export function RecommendedTasks({
                     <Button
                       variant="outline"
                       size="icon"
-                      className="h-8 w-8 border-gray-200"
+                      className="h-8 w-8 border-slate-200"
                     >
                       <TrendingUp className="w-4 h-4" />
                     </Button>
@@ -365,19 +365,19 @@ export function RecommendedTasks({
                       <Button
                         variant="outline"
                         size="sm"
-                        className="h-8 border-gray-200 text-xs font-medium flex items-center gap-1"
+                        className="h-8 border-slate-200 text-xs font-medium flex items-center gap-1"
                         onClick={() => toggleDropdown(task.id)}
                       >
                         Take Action
                         <ChevronDown className="w-3 h-3" />
                       </Button>
                       {openDropdownId === task.id && (
-                        <div className="absolute right-0 mt-1 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-50">
+                        <div className="absolute right-0 mt-1 w-40 bg-white border border-slate-200 rounded-md shadow-lg z-50">
                           <ul className="py-1">
                             <li>
                               <button
                                 onClick={() => handleMenuAction(task.id, 'Take Action')}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 w-full text-left"
                               >
                                 Take Action
                               </button>
@@ -385,7 +385,7 @@ export function RecommendedTasks({
                             <li>
                               <button
                                 onClick={() => handleMenuAction(task.id, 'Assign to')}
-                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                                className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 w-full text-left"
                               >
                                 Assign to
                               </button>
@@ -409,7 +409,7 @@ export function RecommendedTasks({
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className="flex items-center gap-1 h-8 px-4 py-2 rounded-md text-sm font-medium text-slate-500 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-1 h-8 px-4 py-2 rounded-md text-sm font-medium text-slate-500 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Previous</span>
@@ -471,7 +471,7 @@ export function RecommendedTasks({
                   className={`h-8 w-8 flex items-center justify-center rounded-md text-sm font-medium ${
                     isActive
                       ? 'bg-white border border-slate-200 text-slate-500'
-                      : 'text-slate-500 hover:bg-gray-100'
+                      : 'text-slate-500 hover:bg-slate-100'
                   }`}
                 >
                   {page}
@@ -483,7 +483,7 @@ export function RecommendedTasks({
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className="flex items-center gap-1 h-8 px-4 py-2 rounded-md text-sm font-medium text-slate-500 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-1 h-8 px-4 py-2 rounded-md text-sm font-medium text-slate-500 hover:bg-slate-100 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span>Next</span>
             <ChevronRight className="w-4 h-4" />

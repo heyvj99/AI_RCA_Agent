@@ -22,12 +22,12 @@ const Header: React.FC<HeaderProps> = ({ activeTab = 'agentspace', onTabChange }
   ];
 
   return (
-    <header className="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+    <header className="bg-slate-900 text-white px-6 py-4 flex items-center justify-between">
       {/* Left side - Logo and Navigation */}
       <div className="flex items-center space-x-8">
         {/* Logo */}
         <div className="flex items-center">
-          <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-gray-900 font-bold text-lg">
+          <div className="w-8 h-8 bg-white rounded flex items-center justify-center text-slate-900 font-bold text-lg">
             Q
           </div>
         </div>
@@ -40,8 +40,8 @@ const Header: React.FC<HeaderProps> = ({ activeTab = 'agentspace', onTabChange }
               onClick={() => onTabChange?.(tab.id)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-colors ${
                 activeTab === tab.id
-                  ? 'bg-gray-800 border border-white'
-                  : 'hover:bg-gray-800'
+                  ? 'bg-slate-800 border border-white'
+                  : 'hover:bg-slate-800'
               }`}
             >
               <span className="text-lg">{tab.icon}</span>
@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ activeTab = 'agentspace', onTabChange }
         {rightIcons.map((icon) => (
           <button
             key={icon.id}
-            className="w-10 h-10 flex items-center justify-center hover:bg-gray-800 rounded-md transition-colors"
+            className="w-10 h-10 flex items-center justify-center hover:bg-slate-800 rounded-md transition-colors"
             title={icon.label}
           >
             <span className="text-lg">{icon.icon}</span>

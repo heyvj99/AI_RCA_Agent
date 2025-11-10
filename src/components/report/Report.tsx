@@ -48,7 +48,7 @@ export function Report({
   if (isInitialState && !isStreaming) {
     return (
       <div 
-        className="w-full h-full bg-gray-50 relative flex flex-col"
+        className="w-full h-full bg-slate-50 relative flex flex-col"
         style={{
           backgroundImage: 'radial-gradient(circle, slate-50/15% 0.25px, transparent 0.25px)',
           backgroundSize: '18px 18px',
@@ -64,7 +64,7 @@ export function Report({
 
   return (
     <div 
-      className="w-full h-full bg-gray-50 relative flex flex-col"
+      className="w-full h-full bg-slate-50 relative flex flex-col"
       style={{
         backgroundImage: 'radial-gradient(circle, slate-50/15% 0.25px, transparent 0.25px)',
         backgroundSize: '18px 18px',
@@ -81,8 +81,8 @@ export function Report({
             // Loading skeleton state
             <>
               {/* Executive Summary Skeleton */}
-              <div className="bg-white rounded-lg border border-gray-200 p-4">
-                <h3 className="text-base font-semibold text-gray-700 mb-3">Executive Summary</h3>
+              <div className="bg-white rounded-lg border border-slate-200 p-4">
+                <h3 className="text-base font-semibold text-slate-700 mb-3">Executive Summary</h3>
                 <div className="space-y-2">
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-4 w-4/5" />
@@ -92,8 +92,8 @@ export function Report({
               </div>
 
               {/* Key Findings Skeleton */}
-              <div className="bg-white rounded-lg border border-gray-200 p-4">
-                <h3 className="text-base font-semibold text-gray-700 mb-3">Key Findings</h3>
+              <div className="bg-white rounded-lg border border-slate-200 p-4">
+                <h3 className="text-base font-semibold text-slate-700 mb-3">Key Findings</h3>
                 <div className="space-y-2">
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-4 w-4/5" />
@@ -104,8 +104,8 @@ export function Report({
               </div>
 
               {/* Recommendations Skeleton */}
-              <div className="bg-white rounded-lg border border-gray-200 p-4">
-                <h3 className="text-base font-semibold text-gray-700 mb-3">Recommendations</h3>
+              <div className="bg-white rounded-lg border border-slate-200 p-4">
+                <h3 className="text-base font-semibold text-slate-700 mb-3">Recommendations</h3>
                 <div className="space-y-2">
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-4 w-4/5" />
@@ -116,8 +116,8 @@ export function Report({
               </div>
 
               {/* Charts Skeleton */}
-              <div className="bg-white rounded-lg border border-gray-200 p-4">
-                <h3 className="text-base font-semibold text-gray-700 mb-3">Charts</h3>
+              <div className="bg-white rounded-lg border border-slate-200 p-4">
+                <h3 className="text-base font-semibold text-slate-700 mb-3">Charts</h3>
                 <div className="space-y-2">
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-4 w-4/5" />

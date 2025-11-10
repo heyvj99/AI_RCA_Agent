@@ -58,34 +58,34 @@ export function QuerySuggestions({ onQuerySelect }: QuerySuggestionsProps) {
     <div className="w-full max-w-[992px] mx-auto px-4 py-8">
       {/* Welcome Message */}
       <div className="mb-8">
-        <h1 className="text-xl font-bold text-gray-900 mb-2">Hello, VJ</h1>
-        <p className="text-md text-gray-600">What would you like to explore today?</p>
+        <h1 className="text-xl font-bold text-slate-900 mb-2">Hello, VJ</h1>
+        <p className="text-md text-slate-600">What would you like to explore today?</p>
       </div>
 
       {/* Suggested Actions */}
       <div className="mb-8 flex flex-wrap gap-3">
-        <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-200">
+        <button className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium transition-colors border border-slate-200">
           Connect your data source
         </button>
-        <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-200">
+        <button className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium transition-colors border border-slate-200">
           Upload sales report
         </button>
-        <button className="px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-200">
+        <button className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium transition-colors border border-slate-200">
           Use a template
         </button>
       </div>
 
       {/* Query Suggestion Cards */}
       <div className="mb-4 flex items-center gap-2">
-        <History className="w-4 h-4 text-gray-500" />
-        <h2 className="text-sm font-semibold text-gray-700">Recents</h2>
+        <History className="w-4 h-4 text-slate-500" />
+        <h2 className="text-sm font-semibold text-slate-700">Recents</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {suggestions.map((suggestion) => (
           <Card
             key={suggestion.id}
-            className="p-5 cursor-pointer hover:shadow-md transition-shadow border-gray-200 bg-white"
+            className="p-5 cursor-pointer hover:shadow-md transition-shadow border-slate-200 bg-white"
             onClick={() => handleCardClick(suggestion.query)}
           >
             <div className="flex flex-col h-full">
@@ -94,11 +94,11 @@ export function QuerySuggestions({ onQuerySelect }: QuerySuggestionsProps) {
                   {suggestion.icon}
                 </div>
               )}
-              <p className="text-sm text-gray-700 mb-3 line-clamp-3 flex-1">
+              <p className="text-sm text-slate-700 mb-3 line-clamp-3 flex-1">
                 {suggestion.query}
               </p>
-              <div className="mt-auto pt-3 border-t border-gray-100">
-                <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-700">
+              <div className="mt-auto pt-3 border-t border-slate-100">
+                <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700">
                   {suggestion.skill}
                 </span>
               </div>

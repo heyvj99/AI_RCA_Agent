@@ -43,7 +43,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
   const borderColor = highlighted 
     ? 'border-violet-300' 
     : status === 'in-progress' 
-    ? 'border-gray-200' 
+    ? 'border-slate-200' 
     : 'border-slate-300';
 
   const bgColor = (status === 'completed' && completedAt && (pendingTasks === 0 || pendingTasks === undefined))
@@ -55,18 +55,18 @@ const TaskCard: React.FC<TaskCardProps> = ({
       <div className="flex flex-col gap-3 p-3">
         {/* Tag */}
         <div className="flex items-start">
-          <div className="bg-gray-50 border border-gray-200 rounded-md px-2 py-0.5">
-            <p className="font-normal text-xs text-gray-500">{tag}</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-md px-2 py-0.5">
+            <p className="font-normal text-xs text-slate-500">{tag}</p>
           </div>
         </div>
 
         {/* Main Text */}
-        <p className="font-medium text-sm text-gray-900 leading-5">
+        <p className="font-medium text-sm text-slate-900 leading-5">
            Kellogg&apos;s: 10 Jul→16 Jul &apos;25 vs 03 Jul→09 Jul &apos;25
         </p>
 
         {/* Question */}
-        <p className="font-normal text-sm text-gray-700 leading-5">
+        <p className="font-normal text-sm text-slate-700 leading-5">
         A detailed report on <span className="">{question}</span>
         </p>
 
@@ -82,14 +82,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
         {/* Completion timestamp - shown for completed reports */}
         {status === 'completed' && completedAt && (
-          <p className="font-normal text-xs text-gray-500">
+          <p className="font-normal text-xs text-slate-500">
             Completed on {completedAt}
           </p>
         )}
 
         {/* Footer - State 2: Completed report but pending tasks */}
         {status === 'completed' && pendingTasks !== undefined && pendingTasks > 0 && (
-          <div className="pt-2 border-t border-gray-100 bg-gray-50 -mx-3 -mb-3 px-3 pb-3 rounded-b-lg">
+          <div className="pt-2 border-t border-slate-100 bg-slate-50 -mx-3 -mb-3 px-3 pb-3 rounded-b-lg">
             <div 
               className="flex items-center justify-between cursor-pointer"
               onClick={() => setIsTasksExpanded(!isTasksExpanded)}
@@ -101,17 +101,17 @@ const TaskCard: React.FC<TaskCardProps> = ({
                 </p>
               </div>
               {isTasksExpanded ? (
-                <ChevronDown className="w-4 h-4 text-gray-500" />
+                <ChevronDown className="w-4 h-4 text-slate-500" />
               ) : (
-                <ChevronRight className="w-4 h-4 text-gray-500" />
+                <ChevronRight className="w-4 h-4 text-slate-500" />
               )}
             </div>
             {isTasksExpanded && (
               <div className="mt-3 space-y-2">
                 {dummyTasks.slice(0, pendingTasks).map((task, index) => (
                   <div key={index} className="flex items-center gap-2">
-                    <Circle className="w-4 h-4 text-gray-400" fill="none" />
-                    <p className="font-normal text-sm text-gray-700">{task}</p>
+                    <Circle className="w-4 h-4 text-slate-400" fill="none" />
+                    <p className="font-normal text-sm text-slate-700">{task}</p>
                   </div>
                 ))}
               </div>
@@ -121,29 +121,29 @@ const TaskCard: React.FC<TaskCardProps> = ({
 
         {/* Footer - State 3: Completed report and completed tasks */}
         {status === 'completed' && completedAt && (pendingTasks === 0 || pendingTasks === undefined) && (
-          <div className="pt-2 border-t border-gray-100 -mx-3 -mb-3 px-3 pb-3 rounded-b-lg">
+          <div className="pt-2 border-t border-slate-100 -mx-3 -mb-3 px-3 pb-3 rounded-b-lg">
             <div 
               className="flex items-center justify-between cursor-pointer"
               onClick={() => setIsCompletedTasksExpanded(!isCompletedTasksExpanded)}
             >
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-green-600" />
-                <p className="font-medium text-sm text-gray-700">
+                <p className="font-medium text-sm text-slate-700">
                   Tasks Completed
                 </p>
               </div>
               {isCompletedTasksExpanded ? (
-                <ChevronDown className="w-4 h-4 text-gray-500" />
+                <ChevronDown className="w-4 h-4 text-slate-500" />
               ) : (
-                <ChevronRight className="w-4 h-4 text-gray-500" />
+                <ChevronRight className="w-4 h-4 text-slate-500" />
               )}
             </div>
             {isCompletedTasksExpanded && (
               <div className="mt-3 space-y-2">
                 {dummyCompletedTasks.map((task, index) => (
                   <div key={index} className="flex items-center gap-2">
-                    <CircleCheck className="w-4 h-4 text-gray-400" />
-                    <p className="font-normal text-sm text-gray-700">{task}</p>
+                    <CircleCheck className="w-4 h-4 text-slate-400" />
+                    <p className="font-normal text-sm text-slate-700">{task}</p>
                   </div>
                 ))}
               </div>

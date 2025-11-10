@@ -144,7 +144,7 @@ function PromptInputTextarea({
       onKeyDown={handleKeyDown}
       placeholder="Ask Blake anything about Root Cause Analysis..."
       className={cn(
-        "text-gray-900 placeholder:text-[#697586] min-h-[44px] w-full resize-none border-none bg-transparent shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+        "text-slate-900 placeholder:text-[#697586] min-h-[44px] w-full resize-none border-none bg-transparent shadow-none outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
         className
       )}
       rows={1}
@@ -167,7 +167,7 @@ function PromptInputActions({
     <div className={cn("flex items-center justify-between w-full", className)} {...props}>
       {/* <button
         type="button"
-        className="bg-white border border-violet-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-gray-50 transition-colors"
+        className="bg-white border border-violet-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-slate-50 transition-colors"
         onClick={(e) => {
           e.stopPropagation()
           // Handle new task action

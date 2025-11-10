@@ -148,7 +148,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
 
     return (
       <div className="space-y-3">
-        <h3 className="text-sm font-medium text-gray-700 mb-3">Analyzing your query</h3>
+        <h3 className="text-sm font-medium text-slate-700 mb-3">Analyzing your query</h3>
         {steps.slice(0, visibleSteps).map((step, index) => {
           const IconComponent = step.icon;
           const isCurrentlyStreaming = index === streamingStep - 1;
@@ -156,10 +156,10 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
           
           return (
             <div key={index} className="flex items-start gap-3">
-              <IconComponent className="w-4 h-4 text-gray-500 mt-0.5 flex-shrink-0" />
+              <IconComponent className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
               <div>
-                <h4 className="text-xs font-medium text-gray-600">{step.title}</h4>
-                <p className="text-xs text-gray-500 mt-0.5">
+                <h4 className="text-xs font-medium text-slate-600">{step.title}</h4>
+                <p className="text-xs text-slate-500 mt-0.5">
                   {displayText}
                   {isCurrentlyStreaming && <span className="animate-pulse">|</span>}
                 </p>
@@ -373,7 +373,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
         </div>
         <div className="flex items-center gap-4">
           <div className="bg-white flex items-center gap-2 p-2 rounded-lg">
-            <Sparkles className="w-4 h-4 text-gray-600" />
+            <Sparkles className="w-4 h-4 text-slate-600" />
           </div>
         </div>
       </div>
@@ -387,18 +387,18 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               <div key={index} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[80%] p-3 rounded-2xl ${
                   message.sender === 'user' 
-                    ? 'bg-purple-100 text-gray-900 rounded-bl-2xl' 
+                    ? 'bg-purple-100 text-slate-900 rounded-bl-2xl' 
                     : 'bg-white border border-[#e3e8ef] text-[#0d121c] rounded-br-2xl'
                 }`}>
                   {message.isLoading ? (
                     <div className="flex items-center gap-2">
                       <Loader variant="dots" size="sm" />
-                      <span className="text-sm text-gray-500">Thinking...</span>
+                      <span className="text-sm text-slate-500">Thinking...</span>
                     </div>
                   ) : (
                     <p className="text-sm leading-5">{message.content}</p>
                   )}
-                  <p className="text-xs text-gray-500 mt-1">{message.timestamp}</p>
+                  <p className="text-xs text-slate-500 mt-1">{message.timestamp}</p>
                   
                   {/* Reasoning component for agent messages */}
                   {message.sender === 'agent' && message.reasoning && !message.isLoading && (
@@ -469,9 +469,9 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               <h3 className="text-sm font-medium text-[#7800f2]">Assigning new task to Blake</h3>
               <button 
                 onClick={() => setIsNewTaskModalOpen(false)}
-                className="w-4 h-4 flex items-center justify-center hover:bg-gray-100 rounded"
+                className="w-4 h-4 flex items-center justify-center hover:bg-slate-100 rounded"
               >
-                <X className="w-4 h-4 text-gray-600" />
+                <X className="w-4 h-4 text-slate-600" />
               </button>
             </div>
 
@@ -483,7 +483,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                   <Menu className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.category}</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
+                <ChevronDown className="w-4 h-4 text-slate-600" />
               </div>
 
               {/* Date Range */}
@@ -492,7 +492,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                   <Calendar className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.dateRange}</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
+                <ChevronDown className="w-4 h-4 text-slate-600" />
               </div>
 
               {/* Comparison Range */}
@@ -503,7 +503,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                   </div>
                   <span className="text-xs font-medium text-[#0d121c]">{formData.comparisonRange}</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
+                <ChevronDown className="w-4 h-4 text-slate-600" />
               </div>
 
               {/* Repeat Frequency */}
@@ -512,7 +512,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                   <Plus className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.repeatFrequency}</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
+                <ChevronDown className="w-4 h-4 text-slate-600" />
               </div>
 
               {/* Mode Selection */}
@@ -557,7 +557,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                   <Menu className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.emails}</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
+                <ChevronDown className="w-4 h-4 text-slate-600" />
               </div>
 
               {/* Channel Field */}
@@ -566,7 +566,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
                   <Menu className="w-4 h-4 text-[#6927da]" />
                   <span className="text-xs font-medium text-[#0d121c]">{formData.channel}</span>
                 </div>
-                <ChevronDown className="w-4 h-4 text-gray-600" />
+                <ChevronDown className="w-4 h-4 text-slate-600" />
               </div>
             </div>
           </div>
@@ -585,7 +585,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ className = '', onStreamingChange
               <button
                 type="button"
                 onClick={() => setIsNewTaskModalOpen(!isNewTaskModalOpen)}
-                className="bg-white border border-violet-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-gray-50 transition-colors"
+                className="bg-white border border-violet-200 rounded-full px-3 py-1.5 flex items-center gap-2 h-8 hover:bg-slate-50 transition-colors"
               >
                 <SlidersHorizontal className="w-4 h-4 text-[#6927da]" />
                 <span className="text-[#6927da] text-xs font-semibold">Config</span>

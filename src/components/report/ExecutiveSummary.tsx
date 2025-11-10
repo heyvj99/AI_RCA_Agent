@@ -10,8 +10,8 @@ interface ExecutiveSummaryProps {
 
 export function ExecutiveSummary({ content }: ExecutiveSummaryProps) {
   return (
-    <div className="bg-white p-4 rounded-lg border border-gray-200">
-      <h2 className="text-base font-semibold text-gray-900 mb-3">
+    <div className="bg-white p-4 rounded-lg border border-slate-200">
+      <h2 className="text-base font-semibold text-slate-900 mb-3">
         Executive Summary
       </h2>
       
@@ -20,7 +20,7 @@ export function ExecutiveSummary({ content }: ExecutiveSummaryProps) {
           remarkPlugins={[remarkGfm, remarkBreaks]}
           components={{
             p: ({ children }) => (
-              <p className="text-sm text-gray-700 leading-snug mb-2">
+              <p className="text-sm text-slate-700 leading-snug mb-2">
                 {children}
               </p>
             ),
@@ -78,8 +78,8 @@ export function ExecutiveSummary({ content }: ExecutiveSummaryProps) {
               
               if (isNested) {
                 return (
-                  <li className="flex items-start gap-1.5 text-sm text-gray-600 leading-snug mb-1">
-                    <span className="text-gray-300 mt-1 flex-shrink-0 text-xs">•</span>
+                  <li className="flex items-start gap-1.5 text-sm text-slate-600 leading-snug mb-1">
+                    <span className="text-slate-300 mt-1 flex-shrink-0 text-xs">•</span>
                     <span className="flex-1">
                       {React.Children.map(children, (child, idx) => 
                         replaceEmojiWithIcons(child, idx)
@@ -90,7 +90,7 @@ export function ExecutiveSummary({ content }: ExecutiveSummaryProps) {
               }
               
               return (
-                <li className="text-sm text-gray-700 leading-snug">
+                <li className="text-sm text-slate-700 leading-snug">
                   {React.Children.map(children, (child, idx) => 
                     replaceEmojiWithIcons(child, idx)
                   )}
@@ -98,10 +98,10 @@ export function ExecutiveSummary({ content }: ExecutiveSummaryProps) {
               );
             },
             strong: ({ children }) => (
-              <strong className="font-medium text-gray-900">{children}</strong>
+              <strong className="font-medium text-slate-900">{children}</strong>
             ),
             em: ({ children }) => (
-              <em className="text-gray-600 font-medium not-italic">{children}</em>
+              <em className="text-slate-600 font-medium not-italic">{children}</em>
             ),
           }}
         >
